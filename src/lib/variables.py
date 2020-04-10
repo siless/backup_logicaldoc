@@ -1,4 +1,5 @@
 from enum import Enum
+from pathlib import Path
 
 
 def _set_archive_name(fname, fmt='%Y%m%d-%H%M%S_{fname}'):
@@ -26,6 +27,7 @@ class PathVariables(Enum):
     CONF = "conf"
     DOC = "repository/docs"
     INDEX = "repository/index"
+    BACKUP_CONF = Path.cwd().joinpath(SRC.__str__(), "conf", "backup.ini")
 
     def __str__(self):
         return str(self.value)

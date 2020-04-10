@@ -18,10 +18,10 @@ class Backup(BasicOperations):
         super().__init__(logger)
         self.backup = self.cwd.joinpath(PathVariables.SRC_BACKUP.__str__())
         self.log.info("Sicherung begonnen und wird gespeichert nach %s" % self.backup)
-        self.dump_cmd = "mysqldump -u cibo -p --add-drop-database logicaldoc"
+        self.dump_cmd = self.__get_sql_dump()
         self.log.debug("cwd: %s" % self.cwd)
 
-    def run_backup(self) -> bool:
+    def run(self) -> bool:
         """
         Methode fuehrt alle backup-Operation durch und soll als einzige Methode von aussen genutzt werden
         :return: true - wenn alle Daten gesichert werden konnten
@@ -47,7 +47,8 @@ class Backup(BasicOperations):
 
         try:
             with open(str(sql_dump_path), 'w')as sql:
-                sql.write(self.run_linux_command(self.dump_cmd).__str__())
+                stream = self.run_linux_command(self.dump_cmd)
+                sql.write(stream.decode("utf-8"))
         except Exception:
             self.log.debug("sql dump konnte nicht durchgefuhert werden. Sicherung abgebrochen")
             sys.exit()
@@ -58,3 +59,10 @@ class Backup(BasicOperations):
         self.tar_archive.add(str(self.logicaldoc_index))
         self.tar_archive.close()
 
+    def __get_sql_dump(self) -> str:
+        '''
+        Methode erstellt den sqldump - Befehl
+        :return:
+        '''
+        self.cfg.run()
+        return "mysqldump -u%s -p%s --add-drop-database %s" %(self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())

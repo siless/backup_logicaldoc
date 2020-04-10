@@ -6,6 +6,7 @@ import tarfile
 from pathlib import Path
 from tarfile import TarFile
 
+from src.lib.config_reader import ReadConfig
 from src.lib.logger import LogicalDocLogger
 from src.lib.variables import PathVariables, CLICommands
 
@@ -23,8 +24,12 @@ class BasicOperations:
         self.logicaldoc_conf = self.__get_conf()
         self.logicaldoc_doc = self.__get_doc()
         self.logicaldoc_index = self.__get_index()
-        self.tarpath = self.__get_tarfile()
+        self.tar_path = self.__get_tarfile()
         self.tar_archive = self.__get_tarfile_object()
+        self.cfg = ReadConfig(self.log)
+
+    def run(self):
+        raise NotImplementedError("method not implemented")
 
     def _is_logicaldoc_running(self) -> bool:
         """
@@ -41,7 +46,7 @@ class BasicOperations:
         Methode setzt den Arbeitspfad in dem logicaldoc gespeichert ist
         :return: root-Path von logicaldoc
         """
-        ret = input("Installationsverzeichnis logicaldoc [/opt/logicaldoc/community]: ")
+        ret = input("Installationfolder logicaldoc [/opt/logicaldoc/community]: ")
         if ret.strip().__len__() == 0:
             root = Path(PathVariables.OPT___COMMUNITY.__str__())
         else:
@@ -49,7 +54,7 @@ class BasicOperations:
 
         while True:
             if not root.exists():
-                root = Path(input("Verzeichnis existiert nicht: "))
+                root = Path(input("Folder does not exist: "))
             else:
                 break
         self.log.info("Logicaldoc root %s" % root)
@@ -62,7 +67,7 @@ class BasicOperations:
         :return: stdout
         """
         command = shlex.split(cmd)
-        self.log.debug("Kommando %s wird ausgefuehrt" % cmd)
+        self.log.debug("Running command %s" % cmd)
         proc = subprocess.Popen(command, stdout=subprocess.PIPE)
         out = proc.communicate()[0]  # nur in [0] steht die Antwort. [1] ist meinst None
         return out
@@ -74,18 +79,18 @@ class BasicOperations:
 
     def __get_conf(self) -> Path:
         ret = self.logicaldoc_root.joinpath(PathVariables.CONF.__str__())
-        self.log.debug("conf Pfad: %s" % ret)
+        self.log.debug("conf path: %s" % ret)
         return ret
 
     def __get_doc(self) -> Path:
         ret = self.logicaldoc_root.joinpath(PathVariables.DOC.__str__())
-        self.log.debug("docs Pfad: %s" % ret)
+        self.log.debug("docs path: %s" % ret)
         return ret
 
     def __get_index(self) -> Path:
         ret = self.logicaldoc_root.joinpath(PathVariables.INDEX.__str__())
-        self.log.debug("index Pfad: %s" % ret)
+        self.log.debug("index path: %s" % ret)
         return ret
 
     def __get_tarfile_object(self) -> TarFile:
-        return tarfile.TarFile(self.tarpath, mode='w')
+        return tarfile.TarFile(self.tar_path, mode='w')

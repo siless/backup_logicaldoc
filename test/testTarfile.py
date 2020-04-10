@@ -25,7 +25,7 @@ class MyTestCase(unittest.TestCase):
         log = LogicalDocLogger("backup.log")
         bkp = Backup(log)
         bkp.backup = Path("/home/cibo/logicaldoc/community")
-        bkp.run_backup()
+        bkp.run()
         self.assertTrue(Path("/home/cibo/logicaldoc/community/archive.tar").exists())
 
         value = bkp.run_linux_command("adsf")

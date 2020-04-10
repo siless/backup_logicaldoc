@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
+import os
 import sys
 
 from src.lib.logger import LogicalDocLogger
 from src.operations.backup import Backup
-
 from src.operations.install import Install
 from src.operations.restore import Restore
 
@@ -15,7 +15,7 @@ def operation_ends(value):
 def __backup():
     logger = LogicalDocLogger("backup.log")
     backup = Backup(logger)
-    backup.run_backup()
+    backup.run()
 
     operation_ends("backup")
 
@@ -23,6 +23,7 @@ def __backup():
 def __restore():
     logger = LogicalDocLogger("restore.log")
     restore = Restore(logger)
+    restore.run()
 
     operation_ends("restore")
 
@@ -33,15 +34,14 @@ def __install():
         input_value = input("System wird neu installiert und alte Daten ueberschreiben [y/n]: ")
         if input_value.lower().__eq__("y"):
             install = Install(logger)
-
+            install.run()
             operation_ends("Installation")
         else:
             sys.exit("Installation abgebrochen")
 
 
 def main():
-    # if os.getuid() != 0:
-    #     sys.exit("Unzureichende Privilegien")
+    print("Diese Anwendung verwaltet die Sicherung oder Wiederherstellung fuer logicdoc")
     while True:
         value = input("[backup|restore|install] ")
         value = value.strip()
@@ -54,5 +54,6 @@ def main():
 
 
 if __name__ == '__main__':
-    print("Diese Anwendung verwaltet die Sicherung oder Wiederherstellung fuer logicdoc")
+    if os.getuid() != 0:
+        sys.exit("Unzureichende Privilegien")
     main()
