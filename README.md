@@ -9,4 +9,3 @@ Requirements:
 - The script uses mysqldump -> mysql databaase is recommended
 - no extra pip installations are needed -> hit n run program
 - ./src/conf/backup.ini -> all settings that are needed
-- 
