@@ -17,7 +17,7 @@ class Restore(BasicOperations):
 
     def __set_restore_cmd(self, dumpfile: Path):
         """
-        Methode setzt das Kommando zum Wiederherstellen der Datenbank
+        Methode creates dumpfile command
         :param dumpfile: sqldump-File
         :return: None
         """

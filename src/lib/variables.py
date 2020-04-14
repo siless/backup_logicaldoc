@@ -4,9 +4,9 @@ from pathlib import Path
 
 def _set_archive_name(fname, fmt='%Y%m%d-%H%M%S_{fname}'):
     """
-    Methode setzt ein Zeitstempel vor den Dateinamen um bestehende Archive nicht zu ueberschreiben
-    :param fname: Dateiname mit Endung
-    :param fmt: Format - kann abweichend sein
+    Method adds a timestamp as a prefix to the tar archives.
+    :param fname: filename with suffix e.g. archive.tar
+    :param fmt: personal own format
     :return: xxxxx_fname
     """
     import datetime
@@ -15,7 +15,7 @@ def _set_archive_name(fname, fmt='%Y%m%d-%H%M%S_{fname}'):
 
 class PathVariables(Enum):
     """
-    Enum stellt alle Variablen zur Verfuegung damit nur an einer Stelle str erstellt und geaendert werden muesssen
+    Enum offers str-vars , that the modules does not need any further str-vars
     """
     SRC = "src"
     SRC_BACKUP = SRC + "/backup/"
@@ -35,7 +35,7 @@ class PathVariables(Enum):
 
 class CLICommands(Enum):
     """
-    Enum mit allen Kommandozeilenkommandos um keine str im Code vertreut fest eingetragen zu haben
+    Enum with all linux commands.
     """
     LOGICALDOC_STATUS = "systemctl status logicaldocd"
     LOGICALDOC_START = "systemctl start logicaldocd"

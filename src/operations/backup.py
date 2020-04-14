@@ -23,24 +23,24 @@ class Backup(BasicOperations):
 
     def run(self) -> bool:
         """
-        Methode fuehrt alle backup-Operation durch und soll als einzige Methode von aussen genutzt werden
+        Method runs all backup-operations and offers the only access to this class
         :return: true - wenn alle Daten gesichert werden konnten
         """
         value = self._is_logicaldoc_running()
         self.log.debug("logicaldocd is running: %s" % value)
         if value:
             out = self.run_linux_command(CLICommands.LOGICALDOC_STOP.__str__())
-            self.log.debug("Rueckmeldung von %s: %s" % (CLICommands.LOGICALDOC_STOP.__str__(), out))
+            self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP.__str__(), out))
 
         self.__backup_datafiles()
         out = self.run_linux_command(CLICommands.LOGICALDOC_START.__str__())
-        self.log.debug("Rueckmeldung von %s: %s" % (CLICommands.LOGICALDOC_START.__str__(), out))
+        self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_START.__str__(), out))
         return True
 
     def __backup_datafiles(self):
         for x in [self.logicaldoc_conf, self.logicaldoc_doc, self.logicaldoc_index]:
             if not x.exists():
-                self.log.debug("%s ist zum Sichern nicht vorhanden. Sicherung abgebrochen" % x)
+                self.log.debug("%s is not available for backing up. Backup up aborted" % x)
                 sys.exit()
         sql_dump_path = self.cwd.joinpath(PathVariables.SRC__DUMP.__str__())
         self.log.debug("dumpfile: %s" % sql_dump_path)
@@ -50,7 +50,7 @@ class Backup(BasicOperations):
                 stream = self.run_linux_command(self.dump_cmd)
                 sql.write(stream.decode("utf-8"))
         except Exception:
-            self.log.debug("sql dump konnte nicht durchgefuhert werden. Sicherung abgebrochen")
+            self.log.debug("sql dump could not be executed. Backup aborted")
             sys.exit()
 
         self.tar_archive.add(str(sql_dump_path))
@@ -61,8 +61,8 @@ class Backup(BasicOperations):
 
     def __get_sql_dump(self) -> str:
         '''
-        Methode erstellt den sqldump - Befehl
-        :return:
+        Method creates sqldump - command
+        :return: command
         '''
         self.cfg.run()
         return "mysqldump -u%s -p%s --add-drop-database %s" %(self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())

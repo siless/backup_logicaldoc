@@ -33,7 +33,7 @@ class BasicOperations:
 
     def _is_logicaldoc_running(self) -> bool:
         """
-        Prueft ob der logicaldocd -Dienst laeuft
+        Checks if logicaldocd runs
         :return: true/false
         """
         if self.run_linux_command(CLICommands.LOGICALDOC_STATUS.__str__()).__contains__(b"Active: active (running)"):
@@ -43,7 +43,7 @@ class BasicOperations:
 
     def __set_logicaldoc_root(self) -> Path:
         """
-        Methode setzt den Arbeitspfad in dem logicaldoc gespeichert ist
+        Methode assigns the working dir where logicaldoc is stored
         :return: root-Path von logicaldoc
         """
         ret = input("Installationfolder logicaldoc [/opt/logicaldoc/community]: ")
@@ -62,8 +62,8 @@ class BasicOperations:
 
     def run_linux_command(self, cmd: str) -> bytes:
         """
-        Methode fuehrt das uebergebene Linuxkommando aus
-        :param cmd: Befehl
+        Methode runs the linux shell command
+        :param cmd: command
         :return: stdout
         """
         command = shlex.split(cmd)

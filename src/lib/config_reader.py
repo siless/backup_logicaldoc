@@ -14,7 +14,7 @@ class ReadConfig:
 
     def run(self) -> None:
         '''
-        Methode liest die Daten aus der backup.ini und die section['db]
+        Method reads data from backup.ini and section[db]
         :return: None
         '''
         fconfig = PathVariables.BACKUP_CONF.__str__()
