@@ -23,6 +23,7 @@ class PathVariables(Enum):
     OPT___COMMUNITY = "/opt/logicaldoc/community]"
     SRC__DUMP = SRC_BACKUP + "logicaldoc.sql"
     SRC__TAR = SRC_BACKUP + _set_archive_name("archive.tar")
+    SRC__DECOMPRESSED = SRC_BACKUP + "/decompressed/"
     ########################
     CONF = "conf"
     DOC = "repository/docs"
@@ -40,6 +41,16 @@ class CLICommands(Enum):
     LOGICALDOC_STATUS = "systemctl status logicaldocd"
     LOGICALDOC_START = "systemctl start logicaldocd"
     LOGICALDOC_STOP = "systemctl stop logicaldocd"
+
+    def __str__(self):
+        return str(self.value)
+
+
+class SearchForPattern(Enum):
+    LOGICALDOC_SQL = "logicaldoc.sql"
+    INDEX = "repository/index/"
+    DOCS = "repository/docs/"
+    CONF = "conf/context.properties"
 
     def __str__(self):
         return str(self.value)

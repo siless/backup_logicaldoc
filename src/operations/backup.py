@@ -17,14 +17,15 @@ class Backup(BasicOperations):
     def __init__(self, logger: LogicalDocLogger):
         super().__init__(logger)
         self.backup = self.cwd.joinpath(PathVariables.SRC_BACKUP.__str__())
-        self.log.info("Sicherung begonnen und wird gespeichert nach %s" % self.backup)
+        self.log.info("Back up is running and will be stored at %s" % self.backup)
         self.dump_cmd = self.__get_sql_dump()
         self.log.debug("cwd: %s" % self.cwd)
+        self.tar_archive = self._get_tarfile_object('w')
 
-    def run(self) -> bool:
+    def run(self):
         """
         Method runs all backup-operations and offers the only access to this class
-        :return: true - wenn alle Daten gesichert werden konnten
+        :return: None
         """
         value = self._is_logicaldoc_running()
         self.log.debug("logicaldocd is running: %s" % value)
@@ -35,9 +36,12 @@ class Backup(BasicOperations):
         self.__backup_datafiles()
         out = self.run_linux_command(CLICommands.LOGICALDOC_START.__str__())
         self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_START.__str__(), out))
-        return True
 
     def __backup_datafiles(self):
+        """
+        Method checks if folders which are backed up are available and creates a sql export file from mysql
+        :return: None
+        """
         for x in [self.logicaldoc_conf, self.logicaldoc_doc, self.logicaldoc_index]:
             if not x.exists():
                 self.log.debug("%s is not available for backing up. Backup up aborted" % x)

@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import logging
 
+from src.lib.config_reader import ReadConfig
 from src.lib.variables import PathVariables
 
 
@@ -10,17 +11,17 @@ class LogicalDocLogger:
         """
         :param xxx.log
         """
-        info = logging.INFO
-        debug = logging.DEBUG
-        logging.basicConfig(filename=PathVariables.SRC_LOGS.__str__()+logfile, format=self.__get_format(), level=debug)
+        cfg = ReadConfig()
+        cfg.run()
+        logging.basicConfig(filename=PathVariables.SRC_LOGS.__str__()+logfile, format=self.__get_format(), level=cfg.get_logging_level())
 
-    def info(self, msg):
+    def info(self, msg: str):
         logging.info(msg)
 
-    def debug(self, msg):
+    def debug(self, msg: str):
         logging.debug(msg)
 
-    def warn(self, msg):
+    def warn(self, msg: str):
         logging.warning(msg)
 
     def __get_format(self) -> str:

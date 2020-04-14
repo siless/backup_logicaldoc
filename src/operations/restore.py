@@ -1,7 +1,8 @@
+import shutil
 import sys
 from pathlib import Path
 
-from src.lib.variables import PathVariables
+from src.lib.variables import PathVariables, SearchForPattern
 from src.operations.base import BasicOperations
 
 
@@ -10,20 +11,41 @@ class Restore(BasicOperations):
     def __init__(self, logger):
         super().__init__(logger)
         self.log.info("Start restoring")
+        self.decompress_path = None
 
     def run(self):
-        self.cfg.run()
-        self.__check_backup()
+        self.tar_path = self.__check_backup()  # override it from base.py bc it is containing the path and the filename as path.obj now
+        self.tar_archive = self._get_tarfile_object('r')
+        self.__decompress_archive()
 
-    def __set_restore_cmd(self, dumpfile: Path):
+        dumpfile = self.__search_for_in_decompress_folder(SearchForPattern.LOGICALDOC_SQL.__str__())
+        docs_folder = self.__search_for_in_decompress_folder(SearchForPattern.DOCS.__str__())
+        index_folder = self.__search_for_in_decompress_folder(SearchForPattern.INDEX.__str__())
+        conf_folder = self.__search_for_in_decompress_folder(SearchForPattern.CONF.__str__())
+
+        # TODO conf/ --> build.properties -> logicaldoc.home pfad anpassen
+        # TODO conf/ --> log.xml -> pfade anpassen
+        # TODO conf/ --> context.properties -> pfade anpassen
+
+        # self.run_linux_command(self.__get_restore_cmd(dumpfile))
+
+        self.__del_decompress_folders()
+
+    def __get_restore_cmd(self, dumpfile: Path) -> str:
         """
         Methode creates dumpfile command
         :param dumpfile: sqldump-File
-        :return: None
+        :return: complete restore command
         """
-        self.restore_cmd = "mysql -u cibo -p logicaldoc < " + str(dumpfile)
+        self.cfg.run()
+        return "mysql -u%s -p%s %s < " + str(dumpfile) % (
+            self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())
 
-    def __check_backup(self):
+    def __check_backup(self) -> Path:
+        """
+        Method checks if archives are available -> yes -> it displays all archives
+        :return: path-object of selected archive
+        """
         backup_folder = self.cwd.joinpath(PathVariables.SRC_BACKUP.__str__())
         archives = list(backup_folder.glob("*.tar"))
         if archives.__len__() == 0:
@@ -32,13 +54,46 @@ class Restore(BasicOperations):
             for f in range(archives.__len__()):
                 print(archives[f])
             while True:
-                value = input("Which backkup do you want to restore: ")
+                value = input("Which backup do you want to restore: ")
                 for f in archives:
                     if str(f).__contains__(value):
-                        break
-                #TODO abbruch der schleife richtig verarbeiten und beenden. im archive sind die pfade als posix(....) angegeben 
+                        return f
                 else:
                     print("Wrong input")
-                    print(archives)
 
+    def __decompress_archive(self):
+        """
+        Methode decompresses tar archive to a certain folder
+        :return: None
+        """
+        self.decompress_path = self.cwd.joinpath(PathVariables.SRC__DECOMPRESSED.__str__())
+        self.log.debug("decompress tar to %s: " % self.decompress_path)
 
+        self.tar_archive.extractall(self.cwd.joinpath(PathVariables.SRC__DECOMPRESSED.__str__()))
+        self.tar_archive.close()
+
+    def __search_for_in_decompress_folder(self, value) -> Path:
+        """
+        Method searches for value in the decompressed tar folder
+        :param value: pattern
+        :return: found path
+        """
+        retval = Path(self.decompress_path)
+        found_values = list()
+
+        for path in retval.rglob(value):
+            found_values.append(path)
+
+        if found_values.__len__() > 1:
+            self.log.debug("searched %s found in %s" % (value, found_values))
+            sys.exit("search in decompress folder found to many files. see restore.log")
+
+        return Path(found_values[0])
+
+    def __del_decompress_folders(self):
+        """
+        Method removes the decompressed tar´s folder
+        :return: None
+        """
+        shutil.rmtree(self.decompress_path)  # TODO maybe ignore_errors = True
+        self.log.info("%s was deleted" % self.decompress_path)

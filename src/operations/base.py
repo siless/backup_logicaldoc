@@ -17,7 +17,7 @@ class BasicOperations:
     log: LogicalDocLogger
 
     def __init__(self, logger):
-        self.dump_cmd, self.restore_cmd = None, None
+        self.tar_archive = None, None, None
         self.log = logger
         self.logicaldoc_root = self.__set_logicaldoc_root()
         self.cwd = Path().cwd()
@@ -25,8 +25,7 @@ class BasicOperations:
         self.logicaldoc_doc = self.__get_doc()
         self.logicaldoc_index = self.__get_index()
         self.tar_path = self.__get_tarfile()
-        self.tar_archive = self.__get_tarfile_object()
-        self.cfg = ReadConfig(self.log)
+        self.cfg = ReadConfig()
 
     def run(self):
         raise NotImplementedError("method not implemented")
@@ -73,24 +72,45 @@ class BasicOperations:
         return out
 
     def __get_tarfile(self) -> Path:
+        """
+        Get object of the backup-archive
+        :return: path-ojbect of tar-file
+        """
         tarfile = self.cwd.joinpath(PathVariables.SRC__TAR.__str__())
         self.log.debug("tarfile: %s" % tarfile)
         return Path(tarfile)
 
     def __get_conf(self) -> Path:
+        """
+        Get the conf folder
+        :return: path-object of conf folder
+        """
         ret = self.logicaldoc_root.joinpath(PathVariables.CONF.__str__())
         self.log.debug("conf path: %s" % ret)
         return ret
 
     def __get_doc(self) -> Path:
+        """
+        Get the doc folder
+        :return: path-object of doc-folder
+        """
         ret = self.logicaldoc_root.joinpath(PathVariables.DOC.__str__())
         self.log.debug("docs path: %s" % ret)
         return ret
 
     def __get_index(self) -> Path:
+        """
+        Get the the index-folder
+        :return: path-object of index-folder
+        """
         ret = self.logicaldoc_root.joinpath(PathVariables.INDEX.__str__())
         self.log.debug("index path: %s" % ret)
         return ret
 
-    def __get_tarfile_object(self) -> TarFile:
-        return tarfile.TarFile(self.tar_path, mode='w')
+    def _get_tarfile_object(self, mode: str) -> TarFile:
+        """
+        Get a tarfile-oject
+        :param mode: modus - r -> read , w -> write
+        :return: tarfile-object
+        """
+        return tarfile.TarFile(self.tar_path, mode=mode)

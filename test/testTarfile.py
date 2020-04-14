@@ -3,7 +3,7 @@ from unittest.mock import patch
 import unittest
 from pathlib import Path
 
-from src.lib import LogicalDocLogger
+from src.lib.logger import LogicalDocLogger
 from src.operations.backup import Backup
 
 
