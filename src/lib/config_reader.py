@@ -12,8 +12,7 @@ class ReadConfig:
         self.parser = ConfigParser()
 
     def run(self) -> None:
-        """
-        Method reads data from backup.ini and section[db]
+        """Method reads data from backup.ini and section[db]
         :return: None
         """
         fconfig = PathVariables.BACKUP_CONF.__str__()

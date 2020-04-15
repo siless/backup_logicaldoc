@@ -5,8 +5,7 @@ from src.lib.variables import PropertiesKeys
 
 
 class ReadProperties:
-    """
-    Class reads and adjusts the conf/context.properties and conf/build.properties
+    """Class reads and adjusts the conf/context.properties and conf/build.properties
     Property files have specific values with paths where logicaldoc is installed and if you restore your backup to a
     different location, you must alter these paths.
     A handy option would be "pyjavaproperties" via pypi but I want to ovoid external packages, therefore I use very old
@@ -14,8 +13,7 @@ class ReadProperties:
     """
 
     def __init__(self, file: Path, value: Path):
-        """
-        Constructor
+        """Constructor
         :param file: build.properties or context.properties
         :param value: new value of path
         """
@@ -36,8 +34,7 @@ class ReadProperties:
         suf_store_1_dir = "repository/docs/"
 
     def __alter_build(self):
-        """
-        Method alters values in build.properties
+        """Method alters values in build.properties
         :return: None
         """
         with open(self.f, 'r') as prop:
@@ -52,8 +49,7 @@ class ReadProperties:
             prop.writelines(tmp)
 
     def __alter_context(self):
-        """
-        Method alters values in context.properties
+        """Method alters values in context.properties
         :return: None
         """
         with open(self.f, 'r') as prop:

@@ -16,7 +16,10 @@ class BasicOperations:
     logicaldoc_root: Path
     log: LogicalDocLogger
 
-    def __init__(self, logger):
+    def __init__(self, logger: LogicalDocLogger):
+        """Contructor
+        :param logger: logger-object
+        """
         self.tar_archive = None, None, None
         self.log = logger
         self.logicaldoc_root = self.__set_logicaldoc_root()
@@ -31,8 +34,7 @@ class BasicOperations:
         raise NotImplementedError("method not implemented")
 
     def _is_logicaldoc_running(self) -> bool:
-        """
-        Checks if logicaldocd runs
+        """Checks if logicaldocd runs
         :return: true/false
         """
         out = self.run_linux_command(CLICommands.LOGICALDOC_STATUS.__str__())
@@ -43,8 +45,7 @@ class BasicOperations:
             return False
 
     def __set_logicaldoc_root(self) -> Path:
-        """
-        Methode assigns the working dir where logicaldoc is stored
+        """Methode assigns the working dir where logicaldoc is stored
         :return: root-Path von logicaldoc
         """
         ret = input("Installationfolder logicaldoc [/opt/logicaldoc/community]: ")
@@ -62,8 +63,7 @@ class BasicOperations:
         return root
 
     def run_linux_command(self, cmd: str) -> bytes:
-        """
-        Methode runs the linux shell command
+        """Methode runs the linux shell command
         :param cmd: command
         :return: stdout
         """
@@ -74,8 +74,7 @@ class BasicOperations:
         return out
 
     def __get_tarfile(self) -> Path:
-        """
-        Get object of the backup-archive
+        """Get object of the backup-archive
         :return: path-ojbect of tar-file
         """
         tarfile = self.cwd.joinpath(PathVariables.SRC__TAR.__str__())
@@ -83,8 +82,7 @@ class BasicOperations:
         return Path(tarfile)
 
     def __get_conf(self) -> Path:
-        """
-        Get the conf folder
+        """Get the conf folder
         :return: path-object of conf folder
         """
         ret = self.logicaldoc_root.joinpath(PathVariables.CONF.__str__())
@@ -92,8 +90,7 @@ class BasicOperations:
         return ret
 
     def __get_doc(self) -> Path:
-        """
-        Get the doc folder
+        """Get the doc folder
         :return: path-object of doc-folder
         """
         ret = self.logicaldoc_root.joinpath(PathVariables.DOC.__str__())
@@ -101,8 +98,7 @@ class BasicOperations:
         return ret
 
     def __get_index(self) -> Path:
-        """
-        Get the the index-folder
+        """Get the the index-folder
         :return: path-object of index-folder
         """
         ret = self.logicaldoc_root.joinpath(PathVariables.INDEX.__str__())
@@ -110,8 +106,7 @@ class BasicOperations:
         return ret
 
     def _get_tarfile_object(self, mode: str) -> TarFile:
-        """
-        Get a tarfile-oject
+        """Get a tarfile-oject
         :param mode: modus - r -> read , w -> write
         :return: tarfile-object
         """

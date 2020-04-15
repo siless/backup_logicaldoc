@@ -3,8 +3,7 @@ from pathlib import Path
 
 
 def _set_archive_name(fname, fmt='%Y%m%d-%H%M%S_{fname}'):
-    """
-    Method adds a timestamp as a prefix to the tar archives.
+    """Method adds a timestamp as a prefix to the tar archives.
     :param fname: filename with suffix e.g. archive.tar
     :param fmt: personal own format
     :return: xxxxx_fname
@@ -14,8 +13,7 @@ def _set_archive_name(fname, fmt='%Y%m%d-%H%M%S_{fname}'):
 
 
 class PathVariables(Enum):
-    """
-    Enum offers str-vars , that the modules does not need any further str-vars
+    """Enum offers str-vars , that the modules does not need any further str-vars
     """
     SRC = "src"
     SRC_BACKUP = SRC + "/backup/"
@@ -35,8 +33,7 @@ class PathVariables(Enum):
 
 
 class CLICommands(Enum):
-    """
-    Enum with all linux commands.
+    """Enum with all linux commands.
     """
     LOGICALDOC_STATUS = "systemctl status logicaldocd"
     LOGICALDOC_START = "systemctl start logicaldocd"
@@ -47,8 +44,7 @@ class CLICommands(Enum):
 
 
 class SearchForPattern(Enum):
-    """
-    Enum that contains search pattern for e.g. shutils.glob()
+    """Enum that contains search pattern for e.g. shutils.glob()
     """
     LOGICALDOC_SQL = "logicaldoc.sql"
     INDEX = "repository/index/"
@@ -60,8 +56,7 @@ class SearchForPattern(Enum):
 
 
 class PropertiesKeys(Enum):
-    """
-    Enum that contains the keys of the property files build.properties and context.properties that must be altered at a restore
+    """Enum that contains the keys of the property files build.properties and context.properties that must be altered at a restore
     """
     LOGICALDOC_HOME = "logicaldoc.home="
     LDOCHOME = "LDOCHOME="
