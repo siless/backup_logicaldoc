@@ -2,7 +2,8 @@ import shutil
 import sys
 from pathlib import Path
 
-from src.lib.variables import PathVariables, SearchForPattern
+from src.lib.properties_reader import ReadProperties
+from src.lib.variables import PathVariables, SearchForPattern, CLICommands
 from src.operations.base import BasicOperations
 
 
@@ -21,15 +22,24 @@ class Restore(BasicOperations):
         dumpfile = self.__search_for_in_decompress_folder(SearchForPattern.LOGICALDOC_SQL.__str__())
         docs_folder = self.__search_for_in_decompress_folder(SearchForPattern.DOCS.__str__())
         index_folder = self.__search_for_in_decompress_folder(SearchForPattern.INDEX.__str__())
-        conf_folder = self.__search_for_in_decompress_folder(SearchForPattern.CONF.__str__())
+        conf_folder = self.__search_for_in_decompress_folder(SearchForPattern.CONF.__str__()).parent #bc we need the folder not a path with a file
 
-        # TODO conf/ --> build.properties -> logicaldoc.home pfad anpassen
+        for file in ["build.properties", "context.properties"]:
+            prop = ReadProperties(conf_folder.joinpath(file), self.logicaldoc_root)
+            prop.set_logger(self.log)
+            prop.run()
+
         # TODO conf/ --> log.xml -> pfade anpassen
         # TODO conf/ --> context.properties -> pfade anpassen
 
+        # if self._is_logicaldoc_running():
+        #     out = self.run_linux_command(CLICommands.LOGICALDOC_STOP.__str__())
+        #     self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP.__str__(), out))
+
         # self.run_linux_command(self.__get_restore_cmd(dumpfile))
 
-        self.__del_decompress_folders()
+        # self.__del_decompress_folders()
+        # self.run_linux_command(CLICommands.LOGICALDOC_START.__str__())
 
     def __get_restore_cmd(self, dumpfile: Path) -> str:
         """

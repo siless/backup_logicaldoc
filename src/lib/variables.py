@@ -47,10 +47,35 @@ class CLICommands(Enum):
 
 
 class SearchForPattern(Enum):
+    """
+    Enum that contains search pattern for e.g. shutils.glob()
+    """
     LOGICALDOC_SQL = "logicaldoc.sql"
     INDEX = "repository/index/"
     DOCS = "repository/docs/"
     CONF = "conf/context.properties"
+
+    def __str__(self):
+        return str(self.value)
+
+
+class PropertiesKeys(Enum):
+    """
+    Enum that contains the keys of the property files build.properties and context.properties that must be altered at a restore
+    """
+    LOGICALDOC_HOME = "logicaldoc.home="
+    LDOCHOME = "LDOCHOME="
+    ACMECAD_COMMAND = "acmecad.command=" #acmecad/AcmeCADConverter.exe
+    ACMEDAD_RESOURCE = "acmecad.resource=" #acmecad/logicaldoc.ini
+    CONF_DBDIR = "conf.dbdir=" #repository/db/
+    CONF_EXPORTDIR = "conf.exportdir=" #repository/impex/out/
+    CONF_IMPORTDIR = "conf.importdir=" #repository/impex/in/
+    CONF_LOGDIR = "conf.logdir=" #repository/logs/
+    CONF_PLUGINDIR = "conf.plugindir=" #repository/plugins/
+    CONF_USERDIR = "conf.userdir=" #repository/users/
+    INDEX_DIR = "index.dir=" #repository/index/
+    STORE_1_DIR = "store.1.dir=" #repository/docs/
+
 
     def __str__(self):
         return str(self.value)

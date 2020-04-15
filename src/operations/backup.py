@@ -27,9 +27,7 @@ class Backup(BasicOperations):
         Method runs all backup-operations and offers the only access to this class
         :return: None
         """
-        value = self._is_logicaldoc_running()
-        self.log.debug("logicaldocd is running: %s" % value)
-        if value:
+        if self._is_logicaldoc_running():
             out = self.run_linux_command(CLICommands.LOGICALDOC_STOP.__str__())
             self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP.__str__(), out))
 

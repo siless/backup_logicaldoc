@@ -13,7 +13,8 @@ class LogicalDocLogger:
         """
         cfg = ReadConfig()
         cfg.run()
-        logging.basicConfig(filename=PathVariables.SRC_LOGS.__str__()+logfile, format=self.__get_format(), level=cfg.get_logging_level())
+        #TODO level=cfg.get_logging_level() zum laufen bringen da basicConfig den wert nicht akzeptiert
+        logging.basicConfig(filename=PathVariables.SRC_LOGS.__str__()+logfile, format=self.__get_format(), level=logging.DEBUG)
 
     def info(self, msg: str):
         logging.info(msg)

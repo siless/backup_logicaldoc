@@ -35,9 +35,11 @@ class BasicOperations:
         Checks if logicaldocd runs
         :return: true/false
         """
-        if self.run_linux_command(CLICommands.LOGICALDOC_STATUS.__str__()).__contains__(b"Active: active (running)"):
+        out = self.run_linux_command(CLICommands.LOGICALDOC_STATUS.__str__())
+        if out.__contains__(b"Active: active (running)"):
             return True
         else:
+            self.log.debug("reponse logicaldocd status: %s" % out)
             return False
 
     def __set_logicaldoc_root(self) -> Path:
