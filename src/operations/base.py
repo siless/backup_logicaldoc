@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import shlex
-import shutil
 import subprocess
 import tarfile
 from pathlib import Path
@@ -12,9 +11,6 @@ from src.lib.variables import PathVariables, CLICommands
 
 
 class BasicOperations:
-    logicaldoc_conf: Path
-    logicaldoc_root: Path
-    log: LogicalDocLogger
 
     def __init__(self, logger: LogicalDocLogger):
         """Contructor

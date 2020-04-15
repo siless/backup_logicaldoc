@@ -1,5 +1,4 @@
 from pathlib import Path
-from configparser import ConfigParser
 
 from src.lib.logger import LogicalDocLogger
 from src.lib.variables import PropertiesKeys as _PK
@@ -34,7 +33,7 @@ class ReadProperties:
                     tmp.append(_PK.LOGICALDOC_HOME + self.new_logidoc_path + "\n")
                 else:
                     tmp.append(line)
-        with open(self.f, 'w') as prop: #this way bc prop.truncate(0) does not work properly
+        with open(self.f, 'w') as prop:  # this way bc prop.truncate(0) does not work properly
             prop.writelines(tmp)
 
     def __alter_context(self):
@@ -63,21 +62,21 @@ class ReadProperties:
         elif line.__contains__(_PK.CONF_DBDIR):
             return _PK.CONF_DBDIR + self.new_logidoc_path + _PK.suf_conf_dbdir + "\n"
         elif line.__contains__(_PK.CONF_EXPORTDIR):
-            return _PK.CONF_EXPORTDIR+self.new_logidoc_path+_PK.suf_conf_exportdir+"\n"
+            return _PK.CONF_EXPORTDIR + self.new_logidoc_path + _PK.suf_conf_exportdir + "\n"
         elif line.__contains__(_PK.CONF_IMPORTDIR):
-            return _PK.CONF_IMPORTDIR+self.new_logidoc_path+_PK.suf_conf_importdir+"\n"
+            return _PK.CONF_IMPORTDIR + self.new_logidoc_path + _PK.suf_conf_importdir + "\n"
         elif line.__contains__(_PK.CONF_IMPORTDIR):
-            return _PK.CONF_IMPORTDIR+self.new_logidoc_path+_PK.suf_conf_importdir+"\n"
+            return _PK.CONF_IMPORTDIR + self.new_logidoc_path + _PK.suf_conf_importdir + "\n"
         elif line.__contains__(_PK.CONF_LOGDIR):
-            return _PK.CONF_LOGDIR+self.new_logidoc_path+_PK.suf_conf_logdir+"\n"
+            return _PK.CONF_LOGDIR + self.new_logidoc_path + _PK.suf_conf_logdir + "\n"
         elif line.__contains__(_PK.CONF_PLUGINDIR):
-            return _PK.CONF_PLUGINDIR+self.new_logidoc_path+_PK.suf_conf_plugindir+"\n"
+            return _PK.CONF_PLUGINDIR + self.new_logidoc_path + _PK.suf_conf_plugindir + "\n"
         elif line.__contains__(_PK.CONF_USERDIR):
-            return _PK.CONF_USERDIR+self.new_logidoc_path+_PK.suf_conf_userdir+"\n"
+            return _PK.CONF_USERDIR + self.new_logidoc_path + _PK.suf_conf_userdir + "\n"
         elif line.__contains__(_PK.INDEX_DIR):
-            return _PK.INDEX_DIR+self.new_logidoc_path+_PK.suf_index_dir+"\n"
+            return _PK.INDEX_DIR + self.new_logidoc_path + _PK.suf_index_dir + "\n"
         elif line.__contains__(_PK.STORE_1_DIR):
-            return _PK.STORE_1_DIR+self.new_logidoc_path+_PK.suf_store_1_dir+"\n"
+            return _PK.STORE_1_DIR + self.new_logidoc_path + _PK.suf_store_1_dir + "\n"
         else:
             return line
 

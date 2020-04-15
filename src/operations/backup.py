@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 import sys
-import tempfile
-import tarfile
-from pathlib import Path
 
 from src.lib.logger import LogicalDocLogger
 from src.lib.variables import PathVariables, CLICommands
@@ -10,9 +7,6 @@ from src.operations.base import BasicOperations
 
 
 class Backup(BasicOperations):
-
-    dump_cmd: str
-    backup: Path
 
     def __init__(self, logger: LogicalDocLogger):
         super().__init__(logger)
@@ -64,4 +58,5 @@ class Backup(BasicOperations):
         :return: command
         """
         self.cfg.run()
-        return "mysqldump -u%s -p%s --add-drop-database %s" %(self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())
+        return "mysqldump -u%s -p%s --add-drop-database %s" % (
+            self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())

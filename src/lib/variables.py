@@ -60,16 +60,16 @@ class PropertiesKeys:
     """
     LOGICALDOC_HOME = "logicaldoc.home="
     LDOCHOME = "LDOCHOME="
-    ACMECAD_COMMAND = "acmecad.command=" #acmecad/AcmeCADConverter.exe
-    ACMEDAD_RESOURCE = "acmecad.resource=" #acmecad/logicaldoc.ini
-    CONF_DBDIR = "conf.dbdir=" #repository/db/
-    CONF_EXPORTDIR = "conf.exportdir=" #repository/impex/out/
-    CONF_IMPORTDIR = "conf.importdir=" #repository/impex/in/
-    CONF_LOGDIR = "conf.logdir=" #repository/logs/
-    CONF_PLUGINDIR = "conf.plugindir=" #repository/plugins/
-    CONF_USERDIR = "conf.userdir=" #repository/users/
-    INDEX_DIR = "index.dir=" #repository/index/
-    STORE_1_DIR = "store.1.dir=" #repository/docs/
+    ACMECAD_COMMAND = "acmecad.command="  # acmecad/AcmeCADConverter.exe
+    ACMEDAD_RESOURCE = "acmecad.resource="  # acmecad/logicaldoc.ini
+    CONF_DBDIR = "conf.dbdir="  # repository/db/
+    CONF_EXPORTDIR = "conf.exportdir="  # repository/impex/out/
+    CONF_IMPORTDIR = "conf.importdir="  # repository/impex/in/
+    CONF_LOGDIR = "conf.logdir="  # repository/logs/
+    CONF_PLUGINDIR = "conf.plugindir="  # repository/plugins/
+    CONF_USERDIR = "conf.userdir="  # repository/users/
+    INDEX_DIR = "index.dir="  # repository/index/
+    STORE_1_DIR = "store.1.dir="  # repository/docs/
 
     # path suffixes that are added to self.logicaldoc_root
     suf_acmecad_command = "/acmecad/AcmeCADConverter.exe"

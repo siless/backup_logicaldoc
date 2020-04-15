@@ -30,8 +30,8 @@ class Restore(BasicOperations):
             prop.run()
 
         # TODO conf/ --> log.xml -> pfade anpassen
-        # TODO conf/ --> context.properties -> pfade anpassen
 
+        # TODO code unterhalb wieder aktivieren wenn dateianpassung vollstaendig getestet ist.
         # if self._is_logicaldoc_running():
         #     out = self.run_linux_command(CLICommands.LOGICALDOC_STOP.__str__())
         #     self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP.__str__(), out))
