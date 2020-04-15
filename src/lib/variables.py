@@ -55,8 +55,8 @@ class SearchForPattern(Enum):
         return str(self.value)
 
 
-class PropertiesKeys(Enum):
-    """Enum that contains the keys of the property files build.properties and context.properties that must be altered at a restore
+class PropertiesKeys:
+    """Static class that contains the keys of the property files build.properties and context.properties that must be altered at a restore
     """
     LOGICALDOC_HOME = "logicaldoc.home="
     LDOCHOME = "LDOCHOME="
@@ -71,6 +71,14 @@ class PropertiesKeys(Enum):
     INDEX_DIR = "index.dir=" #repository/index/
     STORE_1_DIR = "store.1.dir=" #repository/docs/
 
-
-    def __str__(self):
-        return str(self.value)
+    # path suffixes that are added to self.logicaldoc_root
+    suf_acmecad_command = "/acmecad/AcmeCADConverter.exe"
+    suf_acmedad_resource = "/acmecad/logicaldoc.ini"
+    suf_conf_dbdir = "/repository/db/"
+    suf_conf_exportdir = "/repository/impex/out/"
+    suf_conf_importdir = "/repository/impex/in/"
+    suf_conf_logdir = "/repository/logs/"
+    suf_conf_plugindir = "/repository/plugins/"
+    suf_conf_userdir = "/repository/users/"
+    suf_index_dir = "/repository/index/"
+    suf_store_1_dir = "/repository/docs/"
