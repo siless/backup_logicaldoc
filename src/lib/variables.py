@@ -82,3 +82,67 @@ class PropertiesKeys:
     suf_conf_userdir = "/repository/users/"
     suf_index_dir = "/repository/index/"
     suf_store_1_dir = "/repository/docs/"
+
+
+class XmlKeys:
+    PARAM___FILE = "File"
+    PARAM_KEY_VALUE = "value"
+    __WEB = "_WEB"
+    __APPENDER_DMS = "DMS"
+    __APPENDER_DMS_WEB = __APPENDER_DMS + __WEB
+    __APPENDER_DB = "DB"
+    __APPENDER_CP = "CP"
+    __APPENDER_CMIS = "CMIS"
+    __APPENDER_InOp = "IndexOptimizer"
+    __APPENDER_InOpWb = __APPENDER_InOp + __WEB
+    __APPENDER_TaPr = "TagsProcessor"
+    __APPENDER_TaPrWb = __APPENDER_TaPr + __WEB
+    __APPENDER_InTa = "IndexerTask"
+    __APPENDER_InTaWb = __APPENDER_InTa + __WEB
+    __APPENDER_DiPr = "DigestProcessor"
+    __APPENDER_DiPrWb = __APPENDER_DiPr + __WEB
+    __APPENDER_PaCa = "PathCalculator"
+    __APPENDER_PaCaWb = __APPENDER_PaCa + __WEB
+    __APPENDER_SPRING = "spring"
+    __APPENDER_AUTOMATION = "automation"
+
+    # suffix
+    __REPO_LOG = "/repository/logs/"
+    __SUF_WEB = ".html"
+    __suf_automation = __REPO_LOG + "automation.log"
+    __suf_spring = __REPO_LOG + "spring.log"
+    __suf_pa_ca = __REPO_LOG + "pathcalculator.log"
+    __suf_pa_ca_wb = __suf_pa_ca + __SUF_WEB
+    __suf_di_pr = __REPO_LOG + "digestprocessor.log"
+    __suf_di_pr_wb = __suf_di_pr + __SUF_WEB
+    __suf_in_ta = __REPO_LOG + "indexertask.log"
+    __suf_in_ta_wb = __suf_in_ta + __SUF_WEB
+    __suf_ta_pr = __REPO_LOG + "tagsprocessor.log"
+    __suf_ta_pr_wb = __suf_ta_pr + __SUF_WEB
+    __suf_in_op = __REPO_LOG + "indexoptimizer.log"
+    __suf_in_op_wb = __suf_in_op + __SUF_WEB
+    __suf_cmis = __REPO_LOG + "cmis.log"
+    __suf_cp = __REPO_LOG + "cp.log"
+    __suf_db = __REPO_LOG + "db.log"
+    __suf_dms = __REPO_LOG + "dms.log"
+    __suf_dms_wb = __suf_dms + __SUF_WEB
+
+    name_value_list = [
+        [__APPENDER_DMS, __suf_dms],
+        [__APPENDER_DMS_WEB, __suf_dms_wb],
+        [__APPENDER_DB, __suf_db],
+        [__APPENDER_CP, __suf_cp],
+        [__APPENDER_CMIS, __suf_cmis],
+        [__APPENDER_InOp, __suf_in_op],
+        [__APPENDER_InOpWb, __suf_in_op_wb],
+        [__APPENDER_TaPr, __suf_ta_pr],
+        [__APPENDER_TaPrWb, __suf_ta_pr_wb],
+        [__APPENDER_InTa, __suf_in_ta],
+        [__APPENDER_InTaWb, __suf_in_ta_wb],
+        [__APPENDER_DiPr, __suf_di_pr],
+        [__APPENDER_DiPrWb, __suf_di_pr_wb],
+        [__APPENDER_PaCa, __suf_pa_ca],
+        [__APPENDER_PaCaWb, __suf_pa_ca_wb],
+        [__APPENDER_SPRING, __suf_spring],
+        [__APPENDER_AUTOMATION, __suf_automation]
+    ]
