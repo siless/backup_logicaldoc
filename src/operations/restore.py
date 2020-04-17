@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 from src.lib.properties_reader import ReadProperties
-from src.lib.variables import PathVariables, SearchForPattern, CLICommands
+from src.lib.variables import PathVariables, SearchForPattern
 from src.lib.xml_reader import ReadXML
 from src.operations.base import BasicOperations
 
@@ -11,6 +11,9 @@ from src.operations.base import BasicOperations
 class Restore(BasicOperations):
 
     def __init__(self, logger):
+        """Contructor
+        :param logger:  logger-object
+        """
         super().__init__(logger)
         self.log.info("Start restoring")
         self.decompress_path = None
@@ -23,7 +26,8 @@ class Restore(BasicOperations):
         dumpfile = self.__search_for_in_decompress_folder(SearchForPattern.LOGICALDOC_SQL.__str__())
         docs_folder = self.__search_for_in_decompress_folder(SearchForPattern.DOCS.__str__())
         index_folder = self.__search_for_in_decompress_folder(SearchForPattern.INDEX.__str__())
-        conf_folder = self.__search_for_in_decompress_folder(SearchForPattern.CONF.__str__()).parent #bc we need the folder not a path with a file
+        conf_folder = self.__search_for_in_decompress_folder(
+            SearchForPattern.CONF.__str__()).parent  # bc we need the folder not a path with a file
 
         for file in ["build.properties", "context.properties"]:
             prop = ReadProperties(conf_folder.joinpath(file), self.logicaldoc_root)
@@ -45,7 +49,7 @@ class Restore(BasicOperations):
         # self.run_linux_command(CLICommands.LOGICALDOC_START.__str__())
 
     def __get_restore_cmd(self, dumpfile: Path) -> str:
-        """Methode creates dumpfile command
+        """Methode creates dumpfile command.
         :param dumpfile: sqldump-File
         :return: complete restore command
         """
@@ -54,7 +58,7 @@ class Restore(BasicOperations):
             self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())
 
     def __check_backup(self) -> Path:
-        """Method checks if archives are available -> yes -> it displays all archives
+        """Method checks if archives are available -> yes -> it displays all archives.
         :return: path-object of selected archive
         """
         backup_folder = self.cwd.joinpath(PathVariables.SRC_BACKUP.__str__())
@@ -73,7 +77,7 @@ class Restore(BasicOperations):
                     print("Wrong input")
 
     def __decompress_archive(self):
-        """Methode decompresses tar archive to a certain folder
+        """Methode decompresses tar archive to a certain folder.
         :return: None
         """
         self.decompress_path = self.cwd.joinpath(PathVariables.SRC__DECOMPRESSED.__str__())
@@ -83,7 +87,7 @@ class Restore(BasicOperations):
         self.tar_archive.close()
 
     def __search_for_in_decompress_folder(self, value) -> Path:
-        """Method searches for value in the decompressed tar folder
+        """Method searches for value in the decompressed tar folder.
         :param value: pattern
         :return: found path
         """
@@ -100,7 +104,7 @@ class Restore(BasicOperations):
         return Path(found_values[0])
 
     def __del_decompress_folders(self):
-        """Method removes the decompressed tar´s folder
+        """Method removes the decompressed tar´s folder.
         :return: None
         """
         shutil.rmtree(self.decompress_path)  # TODO maybe ignore_errors = True

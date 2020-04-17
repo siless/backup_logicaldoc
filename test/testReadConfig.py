@@ -1,7 +1,7 @@
-import unittest
 import logging
+import unittest
+
 from src.lib.config_reader import ReadConfig
-from src.lib.logger import LogicalDocLogger
 
 
 class MyTestCase(unittest.TestCase):
@@ -11,7 +11,6 @@ class MyTestCase(unittest.TestCase):
 
         with self.assertRaises(FileNotFoundError) as r:
             self.cfg.run()
-
 
 
 if __name__ == '__main__':

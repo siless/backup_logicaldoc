@@ -1,9 +1,9 @@
 import unittest
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 from src.lib.logger import LogicalDocLogger
 from src.lib.xml_reader import ReadXML
-import xml.etree.ElementTree as ET
 
 
 class MyTestCase(unittest.TestCase):

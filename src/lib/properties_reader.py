@@ -13,14 +13,14 @@ class ReadProperties(BasicReader):
     """
 
     def __init__(self, file: Path, value: Path):
-        """Constructor
+        """Constructor.
         :param file: build.properties or context.properties
         :param value: new value of path
         """
         super().__init__(file, value)
 
     def __alter_build(self):
-        """Method alters values in build.properties
+        """Method alters values in build.properties.
         :return: None
         """
         with open(self.f, 'r') as prop:
@@ -35,7 +35,7 @@ class ReadProperties(BasicReader):
             prop.writelines(tmp)
 
     def __alter_context(self):
-        """Method alters values in context.properties
+        """Method alters values in context.properties.
         :return: None
         """
         with open(self.f, 'r') as prop:
@@ -47,7 +47,7 @@ class ReadProperties(BasicReader):
             prop.writelines(tmp)
 
     def __get_key_value_pair(self, line: str):
-        """Method builds the key-value pair
+        """Method builds the key-value pair.
         :param line: line to alter
         :return: new line with new logicaldoc-home path
         """

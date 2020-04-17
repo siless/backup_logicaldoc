@@ -10,7 +10,7 @@ class ReadXML(BasicReader):
     """
 
     def __init__(self, file: Path, value: Path):
-        """Constructor
+        """Constructor.
         :param file: file to alter
         :param value: new logicaldoc-home value
         """
@@ -18,7 +18,7 @@ class ReadXML(BasicReader):
         self.xml_tree = None
 
     def __alter_log_xml(self):
-        """Methode changes old path values to the new logicaldoc-home
+        """Methode changes old path values to the new logicaldoc-home.
         :return: None
         """
         self.log.info("log.xml is being altered")

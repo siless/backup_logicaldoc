@@ -1,15 +1,13 @@
 import shutil
-from unittest.mock import patch
 import unittest
 from pathlib import Path
+from unittest.mock import patch
 
 from src.lib.logger import LogicalDocLogger
 from src.operations.backup import Backup
 
 
 class MyTestCase(unittest.TestCase):
-
-
 
     def setUp(self) -> None:
         self.pf_index = Path("/home/cibo/logicaldoc/community/repository/index/index.txt")
@@ -19,7 +17,6 @@ class MyTestCase(unittest.TestCase):
         self.pf_doc.mkdir(parents=True)
         self.pf_index.mkdir(parents=True)
 
-        pass
     @patch('src.operations.backup.run_linux_command', return_value="hatschi")
     def test_something(self, mock_run_linux_command):
         log = LogicalDocLogger("backup.log")
@@ -33,7 +30,7 @@ class MyTestCase(unittest.TestCase):
 
     def tearDown(self) -> None:
         shutil.rmtree("/home/cibo/logicaldoc/")
-        pass
+
 
 if __name__ == '__main__':
     unittest.main()

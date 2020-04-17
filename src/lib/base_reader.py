@@ -6,8 +6,7 @@ from src.lib.logger import LogicalDocLogger
 class BasicReader(object):
 
     def __init__(self, file: Path, value: Path):
-        """
-        Constructor
+        """Constructor.
         :param file: file to alter
         :param value: new logicaldoc-home value
         """
@@ -16,14 +15,14 @@ class BasicReader(object):
         self.log = None
 
     def set_logger(self, logger: LogicalDocLogger):
-        """set logger for this class
+        """Set logger for this class.
         :param logger:
         :return: None
         """
         self.log = logger
 
     def run(self):
-        """Executes all operations
+        """Executes all operations.
         :return:
         """
         raise NotImplementedError

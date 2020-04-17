@@ -7,7 +7,7 @@ from src.lib.variables import PathVariables
 class LogicalDocLogger:
 
     def __init__(self, logfile: str):
-        """
+        """Constructor.
         :param xxx.log
         """
         # cfg = ReadConfig()

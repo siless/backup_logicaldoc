@@ -1,6 +1,6 @@
+import unittest
 from pathlib import Path
 from tarfile import TarFile
-import unittest
 
 
 class MyTestCase(unittest.TestCase):
