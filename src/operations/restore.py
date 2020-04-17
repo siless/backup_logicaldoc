@@ -3,7 +3,7 @@ import sys
 from pathlib import Path
 
 from src.lib.properties_reader import ReadProperties
-from src.lib.variables import PathVariables, SearchForPattern
+from src.lib.variables import PathVariables, SearchForPattern, CLICommands
 from src.lib.xml_reader import ReadXML
 from src.operations.base import BasicOperations
 
@@ -29,24 +29,30 @@ class Restore(BasicOperations):
         conf_folder = self.__search_for_in_decompress_folder(
             SearchForPattern.CONF.__str__()).parent  # bc we need the folder not a path with a file
 
-        for file in ["build.properties", "context.properties"]:
-            prop = ReadProperties(conf_folder.joinpath(file), self.logicaldoc_root)
-            prop.set_logger(self.log)
-            prop.run()
-
-        log_xml = ReadXML(conf_folder.joinpath("log.xml"), self.logicaldoc_root)
-        log_xml.set_logger(self.log)
-        log_xml.run()
+        self.__alter_logicaldoc_config_files(conf_folder)
 
         # TODO code unterhalb wieder aktivieren wenn dateianpassung vollstaendig getestet ist.
-        # if self._is_logicaldoc_running():
-        #     out = self.run_linux_command(CLICommands.LOGICALDOC_STOP.__str__())
-        #     self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP.__str__(), out))
+        if self._is_logicaldoc_running():
+            out = self.run_linux_command(CLICommands.LOGICALDOC_STOP.__str__())
+            self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP.__str__(), out))
 
-        # self.run_linux_command(self.__get_restore_cmd(dumpfile))
+        out = self.run_linux_command(self.__get_restore_cmd(dumpfile))
+        self.log.debug("import mysql dump (drop database) - %s" % out)
 
-        # self.__del_decompress_folders()
-        # self.run_linux_command(CLICommands.LOGICALDOC_START.__str__())
+        #copy decompressed tar and altered config files to logicaldoc home subdirs
+        #first of all -> del old dirs bc copytree does not overwrite existing dirs
+        for i in [self.logicaldoc_doc, self.logicaldoc_index, self.logicaldoc_conf]:
+            try:
+                shutil.rmtree(str(i))
+                self.log.info("%s, was deleted" % (str(i)))
+            except FileNotFoundError:
+                self.log.debug("%s does not exist. Nothing to remove" % str(i))
+        for src, dst in [(conf_folder, self.logicaldoc_conf), (index_folder, self.logicaldoc_index), (docs_folder, self.logicaldoc_doc)]:
+            self.log.info("%s was copied to %s" % (str(src), str(dst)))
+            shutil.copytree(str(src), str(dst))
+
+        self.__del_decompress_folders()
+        self.run_linux_command(CLICommands.LOGICALDOC_START.__str__())
 
     def __get_restore_cmd(self, dumpfile: Path) -> str:
         """Methode creates dumpfile command.
@@ -54,8 +60,7 @@ class Restore(BasicOperations):
         :return: complete restore command
         """
         self.cfg.run()
-        return "mysql -u%s -p%s %s < " + str(dumpfile) % (
-            self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())
+        return "mysql -u%s -p%s %s < %s" % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database(), str(dumpfile))
 
     def __check_backup(self) -> Path:
         """Method checks if archives are available -> yes -> it displays all archives.
@@ -109,3 +114,17 @@ class Restore(BasicOperations):
         """
         shutil.rmtree(self.decompress_path)  # TODO maybe ignore_errors = True
         self.log.info("%s was deleted" % self.decompress_path)
+
+    def __alter_logicaldoc_config_files(self, conf_folder: Path):
+        """Method contains the operations to alter the .xml and .properties files.
+        :param conf_folder: folder of config-files
+        :return: None
+        """
+        for file in ["build.properties", "context.properties"]:
+            prop = ReadProperties(conf_folder.joinpath(file), self.logicaldoc_root)
+            prop.set_logger(self.log)
+            prop.run()
+
+        log_xml = ReadXML(conf_folder.joinpath("log.xml"), self.logicaldoc_root)
+        log_xml.set_logger(self.log)
+        log_xml.run()

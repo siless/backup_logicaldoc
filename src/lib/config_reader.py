@@ -5,6 +5,17 @@ from pathlib import Path
 from src.lib.variables import PathVariables
 
 
+def exit_warning(value):
+    """Method checks if the values in backup.ini are set
+    :param value: key in section[??]
+    :return: value
+    """
+    if value is None or value == '':
+        sys.exit("backup.ini is not configured properly")
+    else:
+        return value
+
+
 class ReadConfig:
 
     def __init__(self):
@@ -23,16 +34,16 @@ class ReadConfig:
         self.section_logging = self.parser['logging']
 
     def get_host(self):
-        return self.section_db['host']
+        return exit_warning(self.section_db['host'])
 
     def get_username(self):
-        return self.section_db['username']
+        return exit_warning(self.section_db['username'])
 
     def get_password(self):
-        return self.section_db['password']
+        return exit_warning(self.section_db['password'])
 
     def get_database(self):
-        return self.section_db['database']
+        return exit_warning(self.section_db['database'])
 
     def get_logging_level(self):
-        return self.section_logging['level']
+        return exit_warning(self.section_logging['level'])

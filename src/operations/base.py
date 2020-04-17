@@ -102,7 +102,7 @@ class BasicOperations:
         return ret
 
     def _get_tarfile_object(self, mode: str) -> TarFile:
-        """Get a tarfile-oject.
+        """Get a tarfile-oject
         :param mode: modus - r -> read , w -> write
         :return: tarfile-object
         """

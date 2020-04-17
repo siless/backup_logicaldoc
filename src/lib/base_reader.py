@@ -23,6 +23,6 @@ class BasicReader(object):
 
     def run(self):
         """Executes all operations.
-        :return:
+        :return: None
         """
         raise NotImplementedError
