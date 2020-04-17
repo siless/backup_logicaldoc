@@ -4,6 +4,7 @@ from pathlib import Path
 
 from src.lib.properties_reader import ReadProperties
 from src.lib.variables import PathVariables, SearchForPattern, CLICommands
+from src.lib.xml_reader import ReadXML
 from src.operations.base import BasicOperations
 
 
@@ -29,7 +30,9 @@ class Restore(BasicOperations):
             prop.set_logger(self.log)
             prop.run()
 
-        # TODO conf/ --> log.xml -> pfade anpassen
+        log_xml = ReadXML(conf_folder.joinpath("log.xml"), self.logicaldoc_root)
+        log_xml.set_logger(self.log)
+        log_xml.run()
 
         # TODO code unterhalb wieder aktivieren wenn dateianpassung vollstaendig getestet ist.
         # if self._is_logicaldoc_running():

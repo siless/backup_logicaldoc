@@ -23,4 +23,7 @@ class BasicReader(object):
         self.log = logger
 
     def run(self):
+        """Executes all operations
+        :return:
+        """
         raise NotImplementedError
