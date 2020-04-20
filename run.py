@@ -41,7 +41,7 @@ def __install():
 
 
 def main():
-    print("Diese Anwendung verwaltet die Sicherung oder Wiederherstellung fuer logicdoc")
+    print("This application manages restoring and backup up for logicaldoc community")
     while True:
         value = input("[backup|restore|install] ")
         value = value.strip()

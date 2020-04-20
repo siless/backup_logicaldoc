@@ -6,7 +6,8 @@ from src.lib.variables import PathVariables
 
 
 def exit_warning(value):
-    """Method checks if the values in backup.ini are set
+    """
+    Method checks if the values in backup.ini are set
     :param value: key in section[??]
     :return: value
     """
@@ -19,16 +20,18 @@ def exit_warning(value):
 class ReadConfig:
 
     def __init__(self):
+        """ReadConfig contrutor."""
         self.section_db, self.section_logging = None, None
         self.parser = ConfigParser()
 
     def run(self) -> None:
-        """Method reads data from backup.ini and section[db].
+        """
+        Method reads data from backup.ini and section[??].
         :return: None
         """
         fconfig = PathVariables.BACKUP_CONF.__str__()
         if not Path(fconfig).exists():
-            sys.exit("%s does not exist. Further actions aborted")
+            sys.exit("%s does not exist. Further actions aborted" % fconfig)
         self.parser.read(fconfig)
         self.section_db = self.parser['db']
         self.section_logging = self.parser['logging']

@@ -10,7 +10,7 @@ class Backup(BasicOperations):
 
     def __init__(self, logger: LogicalDocLogger):
         super().__init__(logger)
-        self.backup = self.cwd.joinpath(PathVariables.SRC_BACKUP.__str__())
+        self.backup = self.cwd.joinpath(PathVariables.SRC_BACKUP)
         self.log.info("Back up is running and will be stored at %s" % self.backup)
         self.dump_cmd = self.__get_sql_dump()
         self.log.debug("cwd: %s" % self.cwd)
@@ -21,12 +21,12 @@ class Backup(BasicOperations):
         :return: None
         """
         if self._is_logicaldoc_running():
-            out = self.run_linux_command(CLICommands.LOGICALDOC_STOP.__str__())
-            self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP.__str__(), out))
+            out = self.run_linux_command(CLICommands.LOGICALDOC_STOP)
+            self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP, out))
 
         self.__backup_datafiles()
         out = self.run_linux_command(CLICommands.LOGICALDOC_START.__str__())
-        self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_START.__str__(), out))
+        self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_START, out))
 
     def __backup_datafiles(self):
         """Method checks if folders which are backed up are available and creates a sql export file from mysql.
@@ -36,7 +36,7 @@ class Backup(BasicOperations):
             if not x.exists():
                 self.log.debug("%s is not available for backing up. Backup up aborted" % x)
                 sys.exit()
-        sql_dump_path = self.cwd.joinpath(PathVariables.SRC__DUMP.__str__())
+        sql_dump_path = self.cwd.joinpath(PathVariables.SRC__DUMP)
         self.log.debug("dumpfile: %s" % sql_dump_path)
 
         try:

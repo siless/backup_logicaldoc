@@ -11,7 +11,8 @@ from src.operations.base import BasicOperations
 class Restore(BasicOperations):
 
     def __init__(self, logger):
-        """Contructor
+        """
+        Contructor.
         :param logger:  logger-object
         """
         super().__init__(logger)
@@ -23,18 +24,18 @@ class Restore(BasicOperations):
         self.tar_archive = self._get_tarfile_object('r')
         self.__decompress_archive()
 
-        dumpfile = self.__search_for_in_decompress_folder(SearchForPattern.LOGICALDOC_SQL.__str__())
-        docs_folder = self.__search_for_in_decompress_folder(SearchForPattern.DOCS.__str__())
-        index_folder = self.__search_for_in_decompress_folder(SearchForPattern.INDEX.__str__())
+        dumpfile = self.__search_for_in_decompress_folder(SearchForPattern.LOGICALDOC_SQL)
+        docs_folder = self.__search_for_in_decompress_folder(SearchForPattern.DOCS)
+        index_folder = self.__search_for_in_decompress_folder(SearchForPattern.INDEX)
         conf_folder = self.__search_for_in_decompress_folder(
-            SearchForPattern.CONF.__str__()).parent  # bc we need the folder not a path with a file
+            SearchForPattern.CONF).parent  # bc we need the folder not a path with a file
 
         self.__alter_logicaldoc_config_files(conf_folder)
 
         # TODO code unterhalb wieder aktivieren wenn dateianpassung vollstaendig getestet ist.
         if self._is_logicaldoc_running():
-            out = self.run_linux_command(CLICommands.LOGICALDOC_STOP.__str__())
-            self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP.__str__(), out))
+            out = self.run_linux_command(CLICommands.LOGICALDOC_STOP)
+            self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP, out))
 
         out = self.run_linux_command(self.__get_restore_cmd(dumpfile))
         self.log.debug("import mysql dump (drop database) - %s" % out)
@@ -52,10 +53,11 @@ class Restore(BasicOperations):
             shutil.copytree(str(src), str(dst))
 
         self.__del_decompress_folders()
-        self.run_linux_command(CLICommands.LOGICALDOC_START.__str__())
+        self.run_linux_command(CLICommands.LOGICALDOC_START)
 
     def __get_restore_cmd(self, dumpfile: Path) -> str:
-        """Methode creates dumpfile command.
+        """
+        Methode creates dumpfile command.
         :param dumpfile: sqldump-File
         :return: complete restore command
         """
@@ -63,7 +65,8 @@ class Restore(BasicOperations):
         return "mysql -u%s -p%s %s < %s" % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database(), str(dumpfile))
 
     def __check_backup(self) -> Path:
-        """Method checks if archives are available -> yes -> it displays all archives.
+        """
+        Method checks if archives are available -> yes -> it displays all archives.
         :return: path-object of selected archive
         """
         backup_folder = self.cwd.joinpath(PathVariables.SRC_BACKUP.__str__())
@@ -82,7 +85,8 @@ class Restore(BasicOperations):
                     print("Wrong input")
 
     def __decompress_archive(self):
-        """Methode decompresses tar archive to a certain folder.
+        """
+        Methode decompresses tar archive to a certain folder.
         :return: None
         """
         self.decompress_path = self.cwd.joinpath(PathVariables.SRC__DECOMPRESSED.__str__())
@@ -92,7 +96,8 @@ class Restore(BasicOperations):
         self.tar_archive.close()
 
     def __search_for_in_decompress_folder(self, value) -> Path:
-        """Method searches for value in the decompressed tar folder.
+        """
+        Method searches for value in the decompressed tar folder.
         :param value: pattern
         :return: found path
         """
@@ -109,14 +114,16 @@ class Restore(BasicOperations):
         return Path(found_values[0])
 
     def __del_decompress_folders(self):
-        """Method removes the decompressed tar´s folder.
+        """
+        Method removes the decompressed tar´s folder.
         :return: None
         """
         shutil.rmtree(self.decompress_path)  # TODO maybe ignore_errors = True
         self.log.info("%s was deleted" % self.decompress_path)
 
     def __alter_logicaldoc_config_files(self, conf_folder: Path):
-        """Method contains the operations to alter the .xml and .properties files.
+        """
+        Method contains the operations to alter the .xml and .properties files.
         :param conf_folder: folder of config-files
         :return: None
         """
