@@ -9,6 +9,10 @@ from src.operations.base import BasicOperations
 class Backup(BasicOperations):
 
     def __init__(self, logger: LogicalDocLogger):
+        """
+        Backup constructor
+        :param logger: logger object
+        """
         super().__init__(logger)
         self.backup = self.cwd.joinpath(PathVariables.SRC_BACKUP)
         self.log.info("Back up is running and will be stored at %s" % self.backup)
@@ -17,7 +21,8 @@ class Backup(BasicOperations):
         self.tar_archive = self._get_tarfile_object('w')
 
     def run(self):
-        """Method runs all backup-operations and offers the only access to this class.
+        """
+        Method runs all backup-operations and offers the only access to this class.
         :return: None
         """
         if self._is_logicaldoc_running():
@@ -29,7 +34,8 @@ class Backup(BasicOperations):
         self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_START, out))
 
     def __backup_datafiles(self):
-        """Method checks if folders which are backed up are available and creates a sql export file from mysql.
+        """
+        Method checks if folders which are backed up are available and creates a sql export file from mysql.
         :return: None
         """
         for x in [self.logicaldoc_conf, self.logicaldoc_doc, self.logicaldoc_index]:
@@ -54,7 +60,8 @@ class Backup(BasicOperations):
         self.tar_archive.close()
 
     def __get_sql_dump(self) -> str:
-        """Method creates sqldump - command.
+        """
+        Method creates sqldump - command.
         :return: command
         """
         self.cfg.run()

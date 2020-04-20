@@ -1,4 +1,3 @@
-from enum import Enum
 from pathlib import Path
 
 
@@ -14,7 +13,9 @@ def _set_archive_name(fname, fmt='%Y%m%d-%H%M%S_{fname}'):
 
 
 class PathVariables(object):
-    """Class offers static str-vars , that the modules does not need any further str-vars."""
+    """
+    Class offers static str-vars , that the modules does not need any further str-vars.
+    """
 
     SRC = "src"
     SRC_BACKUP = SRC + "/backup/"
@@ -31,14 +32,19 @@ class PathVariables(object):
 
 
 class CLICommands(object):
-    """Class with all static linux commands."""
+    """
+    Class with all static linux commands.
+    """
+
     LOGICALDOC_STATUS = "systemctl status logicaldocd"
     LOGICALDOC_START = "systemctl start logicaldocd"
     LOGICALDOC_STOP = "systemctl stop logicaldocd"
 
 
 class SearchForPattern(object):
-    """Class that contains search pattern for e.g. shutils.glob()."""
+    """
+    Class that contains search pattern for e.g. shutils.glob().
+    """
     LOGICALDOC_SQL = "logicaldoc.sql"
     INDEX = "repository/index/"
     DOCS = "repository/docs/"
@@ -46,8 +52,10 @@ class SearchForPattern(object):
 
 
 class PropertiesKeys:
-    """Static class that contains the keys of the property files build.properties and context.properties that must be
-    altered at a restore. """
+    """
+    Static class that contains the keys of the property files build.properties and context.properties that must be
+    altered at a restore.
+    """
 
     LOGICALDOC_HOME = "logicaldoc.home="
     LDOCHOME = "LDOCHOME="
@@ -89,7 +97,9 @@ class PropertiesKeys:
 
 
 class XmlKeys:
-    """This class contains all static variables for altering the log.xml"""
+    """
+    This class contains all static variables for altering the log.xml.
+    """
     PARAM___FILE = "File"
     PARAM_KEY_VALUE = "value"
     __WEB = "_WEB"
