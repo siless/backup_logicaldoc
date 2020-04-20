@@ -39,6 +39,7 @@ class CLICommands(object):
     LOGICALDOC_STATUS = "systemctl status logicaldocd"
     LOGICALDOC_START = "systemctl start logicaldocd"
     LOGICALDOC_STOP = "systemctl stop logicaldocd"
+    LOGICALDOC_ENABLE = "systemctl enable logicaldocd"
 
 
 class SearchForPattern(object):
