@@ -7,10 +7,12 @@ from src.operations.base import BasicOperations
 
 
 class Install(BasicOperations):
-
+    """
+    Class offers all operations to install a daemon to control logicaldoc
+    """
     def __init__(self, logger: LogicalDocLogger):
         """
-        Backup constructor
+        Install constructor
         :param logger: logger object
         """
         super().__init__(logger)
@@ -21,7 +23,7 @@ class Install(BasicOperations):
         if out.__contains__(b'Unit logicaldocd.service could not be found'):
             self.__create_service_file_content()
             p = self.__get_service_file_path()
-            with open(p.__str__(), 'w', encoding='utf-9') as sv:
+            with open(p.__str__(), 'w', encoding='utf-8') as sv:
                 sv.writelines(self.__create_service_file_content())
             self.run_linux_command(CLICommands.LOGICALDOC_ENABLE)
         else:
@@ -30,7 +32,7 @@ class Install(BasicOperations):
 
     def __get_service_file_path(self):
         """
-        Methode checks if folder exists that contains all service-files
+        Methode checks if folder exists that contains all custom systemd service-files
         :return: logicaldocd.service - file
         """
         while True:
@@ -44,7 +46,7 @@ class Install(BasicOperations):
 
     def __create_service_file_content(self):
         """
-        Methode creates the logicaldocd.service
+        Methode creates the logicaldocd.service content
         :return: list contains the file content
         """
         service = [

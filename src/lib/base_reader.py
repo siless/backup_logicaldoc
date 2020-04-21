@@ -20,7 +20,7 @@ class BasicReader(object):
 
     def set_logger(self, logger: LogicalDocLogger):
         """
-        Set logger for this class.
+        Set logger for __name__ class.
         :param logger:
         :return: None
         """

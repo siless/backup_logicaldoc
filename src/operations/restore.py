@@ -12,7 +12,7 @@ class Restore(BasicOperations):
 
     def __init__(self, logger):
         """
-        Contructor.
+        Restore contructor.
         :param logger:  logger-object
         """
         super().__init__(logger)
@@ -24,10 +24,10 @@ class Restore(BasicOperations):
         self.tar_archive = self._get_tarfile_object('r')
         self.__decompress_archive()
 
-        dumpfile = self.__search_for_in_decompress_folder(SearchForPattern.LOGICALDOC_SQL)
-        docs_folder = self.__search_for_in_decompress_folder(SearchForPattern.DOCS)
-        index_folder = self.__search_for_in_decompress_folder(SearchForPattern.INDEX)
-        conf_folder = self.__search_for_in_decompress_folder(
+        dumpfile = self.__search_in_decompress_folder(SearchForPattern.LOGICALDOC_SQL)
+        docs_folder = self.__search_in_decompress_folder(SearchForPattern.DOCS)
+        index_folder = self.__search_in_decompress_folder(SearchForPattern.INDEX)
+        conf_folder = self.__search_in_decompress_folder(
             SearchForPattern.CONF).parent  # bc we need the folder not a path with a file
 
         self.__alter_logicaldoc_config_files(conf_folder)
@@ -74,8 +74,8 @@ class Restore(BasicOperations):
         if archives.__len__() == 0:
             sys.exit("No backups available")
         else:
-            for f in range(archives.__len__()):
-                print(archives[f])
+            for f in archives:
+                print(f)
             while True:
                 value = input("Which backup do you want to restore: ")
                 for f in archives:
@@ -89,13 +89,13 @@ class Restore(BasicOperations):
         Methode decompresses tar archive to a certain folder.
         :return: None
         """
-        self.decompress_path = self.cwd.joinpath(PathVariables.SRC__DECOMPRESSED.__str__())
+        self.decompress_path = self.cwd.joinpath(PathVariables.SRC__DECOMPRESSED)
         self.log.debug("decompress tar to %s: " % self.decompress_path)
 
-        self.tar_archive.extractall(self.cwd.joinpath(PathVariables.SRC__DECOMPRESSED.__str__()))
+        self.tar_archive.extractall(self.cwd.joinpath(PathVariables.SRC__DECOMPRESSED))
         self.tar_archive.close()
 
-    def __search_for_in_decompress_folder(self, value) -> Path:
+    def __search_in_decompress_folder(self, value) -> Path:
         """
         Method searches for value in the decompressed tar folder.
         :param value: pattern
@@ -109,7 +109,7 @@ class Restore(BasicOperations):
 
         if found_values.__len__() > 1:
             self.log.debug("searched %s found in %s" % (value, found_values))
-            sys.exit("search in decompress folder found to many files. see restore.log")
+            sys.exit("search in decompress folder found to many matches. see restore.log")
 
         return Path(found_values[0])
 

@@ -52,7 +52,7 @@ class SearchForPattern(object):
     CONF = "conf/context.properties"
 
 
-class PropertiesKeys:
+class PropertiesKeys(object):
     """
     Static class that contains the keys of the property files build.properties and context.properties that must be
     altered at a restore.

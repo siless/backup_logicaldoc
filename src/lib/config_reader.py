@@ -7,7 +7,7 @@ from src.lib.variables import PathVariables
 
 def exit_warning(value):
     """
-    Method checks if the values in backup.ini are set
+    Function checks if the values in backup.ini are set
     :param value: key in section[??]
     :return: value
     """
@@ -18,6 +18,9 @@ def exit_warning(value):
 
 
 class ReadConfig:
+    """
+    Class handels the operations to get data from backup.ini
+    """
 
     def __init__(self):
         """ReadConfig contrutor."""
@@ -36,17 +39,22 @@ class ReadConfig:
         self.section_db = self.parser['db']
         self.section_logging = self.parser['logging']
 
-    def get_host(self):
+    def get_host(self) -> str:
         return exit_warning(self.section_db['host'])
 
-    def get_username(self):
+    def get_username(self) -> str:
         return exit_warning(self.section_db['username'])
 
-    def get_password(self):
+    def get_password(self) -> str:
         return exit_warning(self.section_db['password'])
 
-    def get_database(self):
+    def get_database(self) -> str:
         return exit_warning(self.section_db['database'])
 
-    def get_logging_level(self):
+    def get_logging_level(self) -> str:
+        """
+        Returns the numeric value of e.g. DEBUG, WARNING etc
+        https://docs.python.org/3/library/logging.html#logging-levels
+        :return: logging lvl as string
+        """
         return exit_warning(self.section_logging['level'])
