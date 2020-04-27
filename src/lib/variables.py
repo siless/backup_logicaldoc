@@ -30,7 +30,8 @@ class PathVariables(object):
     INDEX = "repository/index"
     BACKUP_CONF = Path.cwd().joinpath(SRC, "conf", "backup.ini")
     ########################
-    SYSTEMD = "/etc/systemd/system/"
+    ETC___SYSTEM = "/etc/systemd/system/"
+
 
 class CLICommands(object):
     """
@@ -41,6 +42,8 @@ class CLICommands(object):
     LOGICALDOC_START = "systemctl start logicaldocd"
     LOGICALDOC_STOP = "systemctl stop logicaldocd"
     LOGICALDOC_ENABLE = "systemctl enable logicaldocd"
+    STDERR = "stderr"
+    STDOUT = "stdout"
 
 
 class SearchForPattern(object):
@@ -60,7 +63,7 @@ class PropertiesKeys(object):
     """
 
     LOGICALDOC_HOME = "logicaldoc.home="
-    LDOCHOME = "LDOCHOME="
+    __LDOCHOME = "LDOCHOME="
     __ACMECAD_COMMAND = "acmecad.command="  # acmecad/AcmeCADConverter.exe
     __ACMEDAD_RESOURCE = "acmecad.resource="  # acmecad/logicaldoc.ini
     __CONF_DBDIR = "conf.dbdir="  # repository/db/
@@ -85,6 +88,7 @@ class PropertiesKeys(object):
     __suf_store_1_dir = "/repository/docs/"
 
     name_value_list = [
+        [__LDOCHOME, ""],
         [__ACMECAD_COMMAND, __suf_acmecad_command],
         [__ACMEDAD_RESOURCE, __suf_acmedad_resource],
         [__CONF_DBDIR, __suf_conf_dbdir],

@@ -35,9 +35,9 @@ class Install(BasicOperations):
         :return: logicaldocd.service - file
         """
         while True:
-            systemd = input("Where do you store your *.service files? [%s] " % PathVariables.SYSTEMD)
+            systemd = input("Where do you store your *.service files? [%s] " % PathVariables.ETC___SYSTEM)
             if systemd.__len__() == 0:
-                systemd = PathVariables.SYSTEMD
+                systemd = PathVariables.ETC___SYSTEM
             if Path(systemd).exists():
                 p = Path(systemd).joinpath("logicaldocd.service")
                 self.log.info("%s is created" % p)

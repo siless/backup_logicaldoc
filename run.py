@@ -13,7 +13,7 @@ def operation_ends(value):
 
 
 def __backup():
-    logger = LogicalDocLogger("backup.log")
+    logger = LogicalDocLogger("backup.log").get_prepared_logger()
     backup = Backup(logger)
     backup.run()
 
@@ -21,7 +21,7 @@ def __backup():
 
 
 def __restore():
-    logger = LogicalDocLogger("restore.log")
+    logger = LogicalDocLogger("restore.log").get_prepared_logger()
     restore = Restore(logger)
     restore.run()
 
@@ -29,15 +29,11 @@ def __restore():
 
 
 def __install():
-    logger = LogicalDocLogger("install.log")
-    while True:
-        input_value = input("System wird neu installiert und alte Daten ueberschreiben [y/n]: ")
-        if input_value.lower().__eq__("y"):
-            install = Install(logger)
-            install.run()
-            operation_ends("Installation")
-        else:
-            sys.exit("Installation abgebrochen")
+    logger = LogicalDocLogger("install.log").get_prepared_logger()
+    install = Install(logger)
+    install.run()
+
+    operation_ends("Installation")
 
 
 def main():

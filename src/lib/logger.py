@@ -1,29 +1,45 @@
 #!/usr/bin/env python3
 import logging
 
+from src.lib.config_reader import ReadConfig
 from src.lib.variables import PathVariables
 
 
-class LogicalDocLogger:
+class LogicalDocLogger(object):
+    """Class offers the logging functionality."""
 
     def __init__(self, logfile: str):
-        """Constructor.
+        """
+        Constructor.
         :param xxx.log
         """
-        # cfg = ReadConfig()
-        # cfg.run()
-        # TODO level=cfg.get_logging_level() zum laufen bringen da basicConfig den wert nicht akzeptiert
-        logging.basicConfig(filename=PathVariables.SRC_LOGS.__str__() + logfile, format=self.__get_format(),
-                            level=logging.DEBUG)
+        self.cfg = None
+        self.logfile = logfile
 
-    def info(self, msg: str):
-        logging.info(msg)
+    def get_prepared_logger(self):
+        self.__read_ini()
+        self.__build_logger()
+        return self
 
-    def debug(self, msg: str):
-        logging.debug(msg)
+    def __read_ini(self):
+        self.cfg = ReadConfig()
+        self.cfg.run()
 
-    def warn(self, msg: str):
+    def __build_logger(self):
+        logging.basicConfig(filename=PathVariables.SRC_LOGS + self.logfile, format=self.get_format(), level=int(self.cfg.get_logging_level()))
+
+    @staticmethod
+    def get_format() -> str:
+        return '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+    @staticmethod
+    def warning(msg: str):
         logging.warning(msg)
 
-    def __get_format(self) -> str:
-        return '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    @staticmethod
+    def info(msg: str):
+        logging.info(msg)
+
+    @staticmethod
+    def debug(msg: str):
+        logging.debug(msg)
