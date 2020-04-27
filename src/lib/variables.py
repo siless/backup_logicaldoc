@@ -1,9 +1,9 @@
-from enum import Enum
 from pathlib import Path
 
 
 def _set_archive_name(fname, fmt='%Y%m%d-%H%M%S_{fname}'):
-    """Method adds a timestamp as a prefix to the tar archives.
+    """
+    Method adds a timestamp as a prefix to the tar archives.
     :param fname: filename with suffix e.g. archive.tar
     :param fmt: personal own format
     :return: xxxxx_fname
@@ -12,79 +12,96 @@ def _set_archive_name(fname, fmt='%Y%m%d-%H%M%S_{fname}'):
     return datetime.datetime.now().strftime(fmt).format(fname=fname)
 
 
-class PathVariables(Enum):
-    """Enum offers str-vars , that the modules does not need any further str-vars.
+class PathVariables(object):
     """
+    Class offers static str-vars , that the modules does not need any further str-vars.
+    """
+
     SRC = "src"
     SRC_BACKUP = SRC + "/backup/"
     SRC_LOGS = SRC + "/logs/"
-    OPT___COMMUNITY = "/opt/logicaldoc/community]"
+    OPT___COMMUNITY = "/opt/logicaldoc/community"
     SRC__DUMP = SRC_BACKUP + "logicaldoc.sql"
     SRC__TAR = SRC_BACKUP + _set_archive_name("archive.tar")
-    SRC__DECOMPRESSED = SRC_BACKUP + "/decompressed/"
+    SRC__DECOMPRESSED = SRC_BACKUP + "decompressed/"
     ########################
     CONF = "conf"
     DOC = "repository/docs"
     INDEX = "repository/index"
-    BACKUP_CONF = Path.cwd().joinpath(SRC.__str__(), "conf", "backup.ini")
+    BACKUP_CONF = Path.cwd().joinpath(SRC, "conf", "backup.ini")
+    ########################
+    SYSTEMD = "/etc/systemd/system/"
 
-    def __str__(self):
-        return str(self.value)
-
-
-class CLICommands(Enum):
-    """Enum with all linux commands.
+class CLICommands(object):
     """
+    Class with all static linux commands.
+    """
+
     LOGICALDOC_STATUS = "systemctl status logicaldocd"
     LOGICALDOC_START = "systemctl start logicaldocd"
     LOGICALDOC_STOP = "systemctl stop logicaldocd"
-
-    def __str__(self):
-        return str(self.value)
+    LOGICALDOC_ENABLE = "systemctl enable logicaldocd"
 
 
-class SearchForPattern(Enum):
-    """Enum that contains search pattern for e.g. shutils.glob().
+class SearchForPattern(object):
+    """
+    Class that contains search pattern for e.g. shutils.glob().
     """
     LOGICALDOC_SQL = "logicaldoc.sql"
     INDEX = "repository/index/"
     DOCS = "repository/docs/"
     CONF = "conf/context.properties"
 
-    def __str__(self):
-        return str(self.value)
 
-
-class PropertiesKeys:
-    """Static class that contains the keys of the property files build.properties and context.properties that must be altered at a restore.
+class PropertiesKeys(object):
     """
+    Static class that contains the keys of the property files build.properties and context.properties that must be
+    altered at a restore.
+    """
+
     LOGICALDOC_HOME = "logicaldoc.home="
     LDOCHOME = "LDOCHOME="
-    ACMECAD_COMMAND = "acmecad.command="  # acmecad/AcmeCADConverter.exe
-    ACMEDAD_RESOURCE = "acmecad.resource="  # acmecad/logicaldoc.ini
-    CONF_DBDIR = "conf.dbdir="  # repository/db/
-    CONF_EXPORTDIR = "conf.exportdir="  # repository/impex/out/
-    CONF_IMPORTDIR = "conf.importdir="  # repository/impex/in/
-    CONF_LOGDIR = "conf.logdir="  # repository/logs/
-    CONF_PLUGINDIR = "conf.plugindir="  # repository/plugins/
-    CONF_USERDIR = "conf.userdir="  # repository/users/
-    INDEX_DIR = "index.dir="  # repository/index/
-    STORE_1_DIR = "store.1.dir="  # repository/docs/
+    __ACMECAD_COMMAND = "acmecad.command="  # acmecad/AcmeCADConverter.exe
+    __ACMEDAD_RESOURCE = "acmecad.resource="  # acmecad/logicaldoc.ini
+    __CONF_DBDIR = "conf.dbdir="  # repository/db/
+    __CONF_EXPORTDIR = "conf.exportdir="  # repository/impex/out/
+    __CONF_IMPORTDIR = "conf.importdir="  # repository/impex/in/
+    __CONF_LOGDIR = "conf.logdir="  # repository/logs/
+    __CONF_PLUGINDIR = "conf.plugindir="  # repository/plugins/
+    __CONF_USERDIR = "conf.userdir="  # repository/users/
+    __INDEX_DIR = "index.dir="  # repository/index/
+    __STORE_1_DIR = "store.1.dir="  # repository/docs/
 
     # path suffixes that are added to self.logicaldoc_root
-    suf_acmecad_command = "/acmecad/AcmeCADConverter.exe"
-    suf_acmedad_resource = "/acmecad/logicaldoc.ini"
-    suf_conf_dbdir = "/repository/db/"
-    suf_conf_exportdir = "/repository/impex/out/"
-    suf_conf_importdir = "/repository/impex/in/"
-    suf_conf_logdir = "/repository/logs/"
-    suf_conf_plugindir = "/repository/plugins/"
-    suf_conf_userdir = "/repository/users/"
-    suf_index_dir = "/repository/index/"
-    suf_store_1_dir = "/repository/docs/"
+    __suf_acmecad_command = "/acmecad/AcmeCADConverter.exe"
+    __suf_acmedad_resource = "/acmecad/logicaldoc.ini"
+    __suf_conf_dbdir = "/repository/db/"
+    __suf_conf_exportdir = "/repository/impex/out/"
+    __suf_conf_importdir = "/repository/impex/in/"
+    __suf_conf_logdir = "/repository/logs/"
+    __suf_conf_plugindir = "/repository/plugins/"
+    __suf_conf_userdir = "/repository/users/"
+    __suf_index_dir = "/repository/index/"
+    __suf_store_1_dir = "/repository/docs/"
+
+    name_value_list = [
+        [__ACMECAD_COMMAND, __suf_acmecad_command],
+        [__ACMEDAD_RESOURCE, __suf_acmedad_resource],
+        [__CONF_DBDIR, __suf_conf_dbdir],
+        [__CONF_EXPORTDIR, __suf_conf_exportdir],
+        [__CONF_IMPORTDIR, __suf_conf_importdir],
+        [__CONF_LOGDIR, __suf_conf_logdir],
+        [__CONF_PLUGINDIR, __suf_conf_plugindir],
+        [__CONF_USERDIR, __suf_conf_userdir],
+        [__INDEX_DIR, __suf_index_dir],
+        [__STORE_1_DIR, __suf_store_1_dir]
+    ]
 
 
 class XmlKeys:
+    """
+    This class contains all static variables for altering the log.xml.
+    """
     PARAM___FILE = "File"
     PARAM_KEY_VALUE = "value"
     __WEB = "_WEB"
