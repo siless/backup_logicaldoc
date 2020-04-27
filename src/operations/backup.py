@@ -48,8 +48,8 @@ class Backup(BasicOperations):
             out = self.run_linux_command(self.__get_sql_dump_cmd())
 
             self.log.debug("output sql dump: %s" % out)
-            with open(str(sql_dump_path), 'w') as sql:
-                sql.write(out.get(CLICommands.STDOUT).decode("utf-8"))
+            # with open(str(sql_dump_path), 'w') as sql:
+            #     sql.write(out.get(CLICommands.STDOUT).decode("utf-8"))
         except Exception as e:
             self.log.debug("sql dump could not be executed. Backup aborted: %s" % e)
             sys.exit()
@@ -66,4 +66,5 @@ class Backup(BasicOperations):
         :return: command
         """
         self.cfg.run()
-        return "mysqldump -u%s -p%s --add-drop-database %s" % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())
+        # return "mysqldump -u%s -p%s --add-drop-database %s >" % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())
+        return 'mysqldump -u%s -p%s --add-drop-database %s > %s' % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database(), PathVariables.SRC__DUMP)

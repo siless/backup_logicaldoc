@@ -68,13 +68,16 @@ class BasicOperations:
         :return: stdout or stderr
         """
         command = shlex.split(cmd)
+        # command = shlex.quote(cmd)
         self.log.debug("Running command %s" % cmd)
-        proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        self.log.debug("Process output: %s" % proc)
+        # proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
+        out, err = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
+        self.log.debug("Process output: %s" % out)
+        self.log.debug("Process error: %s" % err)
         #TODO proc return muss als dic erfolgen um err und out gleichzeitig nutzen zu koennen
         return {
-            'stdout': proc.stdout,
-            'stderr': proc.stderr
+            'stdout': out,
+            'stderr': err
         }
 
     def __get_tarfile(self) -> Path:

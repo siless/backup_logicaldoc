@@ -51,7 +51,8 @@ class Restore(BasicOperations):
             self.log.info("%s was copied to %s" % (str(src), str(dst)))
             shutil.copytree(str(src), str(dst))
 
-        self.__del_decompress_folders()
+        #TODO activate it after final test
+        # self.__del_decompress_folders()
         self.run_linux_command(CLICommands.LOGICALDOC_START)
 
     def __get_restore_cmd(self, dumpfile: Path) -> str:
@@ -61,7 +62,8 @@ class Restore(BasicOperations):
         :return: complete restore command
         """
         self.cfg.run()
-        return "mysql -u%s -p%s %s < %s" % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database(), str(dumpfile))
+        # return "mysql -u%s -p%s %s < %s" % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database(), str(dumpfile))
+        return 'mysql -u%s -p%s %s < %s' % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database(), str(dumpfile))
 
     def __check_backup(self) -> Path:
         """

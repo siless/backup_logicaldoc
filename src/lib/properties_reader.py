@@ -30,8 +30,9 @@ class ReadProperties(BasicReader):
             tmp = list()
             for line in prop.readlines():
                 if line.__contains__(PK.LOGICALDOC_HOME):
-                    self.log.debug("altered %s to %s" % (line, self.new_logidoc_path))
-                    tmp.append(PK.LOGICALDOC_HOME + self.new_logidoc_path + "\n")
+                    new_line = PK.LOGICALDOC_HOME + self.new_logidoc_path + "\n"
+                    self.log.debug("altered %s to %s" % (line, new_line))
+                    tmp.append(new_line)
                 else:
                     tmp.append(line)
         with open(self.f, 'w') as prop:  # this way bc prop.truncate(0) does not work properly
@@ -57,8 +58,8 @@ class ReadProperties(BasicReader):
         :return: new line with added new logicaldoc-home path
         """
         for slot in PK.name_value_list:
-            if line.__contains__(slot[0]):
-                return slot[0] + self.new_logidoc_path + slot[1] + "\n"
+            if line.__contains__(slot[0]): #slot[0] = prefix (key)
+                return slot[0] + self.new_logidoc_path + slot[1] + "\n" #slot[1] = suffix (value)
         return line
 
     def run(self):
