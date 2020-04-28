@@ -5,3 +5,6 @@ __pychache__
 venv
 *.log
 *.tar
+*.ini
+/test/ressources
+/test/src
