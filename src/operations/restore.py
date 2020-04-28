@@ -36,7 +36,7 @@ class Restore(BasicOperations):
             out = self.run_linux_command(CLICommands.LOGICALDOC_STOP)
             self.log.debug("response from %s: %s" % (CLICommands.LOGICALDOC_STOP, out))
 
-        out = self.run_linux_command(self.__get_restore_cmd(dumpfile))
+        out = self.run_linux_command(self.__get_restore_cmd(), str(dumpfile))
         self.log.debug("import mysql dump (drop database) - %s" % out)
 
         #copy decompressed tar and altered config files to logicaldoc home subdirs
@@ -51,19 +51,16 @@ class Restore(BasicOperations):
             self.log.info("%s was copied to %s" % (str(src), str(dst)))
             shutil.copytree(str(src), str(dst))
 
-        #TODO activate it after final test
-        # self.__del_decompress_folders()
+        self.__del_decompress_folders()
         self.run_linux_command(CLICommands.LOGICALDOC_START)
 
-    def __get_restore_cmd(self, dumpfile: Path) -> str:
+    def __get_restore_cmd(self) -> str:
         """
-        Methode creates dumpfile command.
-        :param dumpfile: sqldump-File
+        Methode creates restore command.
         :return: complete restore command
         """
         self.cfg.run()
-        # return "mysql -u%s -p%s %s < %s" % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database(), str(dumpfile))
-        return 'mysql -u%s -p%s %s < %s' % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database(), str(dumpfile))
+        return 'mysql -u%s -p%s %s' % (self.cfg.get_username(), self.cfg.get_password(), self.cfg.get_database())
 
     def __check_backup(self) -> Path:
         """

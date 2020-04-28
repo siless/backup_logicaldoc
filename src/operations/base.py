@@ -61,20 +61,26 @@ class BasicOperations:
         self.log.info("Logicaldoc root %s" % root)
         return root
 
-    def run_linux_command(self, cmd: str) -> dict:
+    def run_linux_command(self, cmd: str, stdin=None) -> dict:
         """
         Methode runs the linux shell command.
+        Popen or run cannot interpret a redirect char e.g. '<', '>' therefore it is crucial to use the stdin-Argument
+        to avoid using the shell=True option
+        :param stdin: sql dump filename
         :param cmd: command
         :return: stdout or stderr
         """
         command = shlex.split(cmd)
-        # command = shlex.quote(cmd)
         self.log.debug("Running command %s" % cmd)
-        # proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True)
-        out, err = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE).communicate()
-        self.log.debug("Process output: %s" % out)
-        self.log.debug("Process error: %s" % err)
-        #TODO proc return muss als dic erfolgen um err und out gleichzeitig nutzen zu koennen
+        if stdin is None:
+            proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        else:
+            with open(stdin) as dump:
+                proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=dump)
+        out = proc.stdout
+        err = proc.stderr
+        self.log.debug("Process output: %s" % out.decode("utf-8"))
+        self.log.debug("Process error: %s" % err.decode("utf-8"))
         return {
             'stdout': out,
             'stderr': err

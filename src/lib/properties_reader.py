@@ -59,7 +59,9 @@ class ReadProperties(BasicReader):
         """
         for slot in PK.name_value_list:
             if line.__contains__(slot[0]): #slot[0] = prefix (key)
-                return slot[0] + self.new_logidoc_path + slot[1] + "\n" #slot[1] = suffix (value)
+                new_line = slot[0] + self.new_logidoc_path + slot[1] #slot[1] = suffix (value)
+                self.log.debug("altered %s to %s" % (line, new_line))
+                return new_line + "\n"
         return line
 
     def run(self):
