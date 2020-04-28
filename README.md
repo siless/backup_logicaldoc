@@ -6,7 +6,7 @@ The wiki/forum offers some ideas that is necessary for backing up or restoring y
 I made an easy to use program for backing up / restoring | migration] / installing of your data.
 
 Requirements:
--  The script uses mysql.
--  No extra pip installations are needed. It is a hit and run program.
--  The programm must only be configured in ./src/conf/backup.ini
--  Initial installation of logicaldoc community must be done
+-   The script uses mysql.
+-   No extra pip installations are needed. It is a hit and run program.
+-   The programm must only be configured in ./src/conf/backup.ini
+-   Initial installation of logicaldoc community must be done
