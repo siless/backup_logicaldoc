@@ -22,7 +22,7 @@ class ReadXML(BasicReader):
         Methode changes old path values to the new logicaldoc-home.
         :return: None
         """
-        self.log.info("log.xml is being altered")
+        self.log.info("start altering log.xml")
         self.xml_tree = ET.parse(self.f)
         root = self.xml_tree.getroot()
 

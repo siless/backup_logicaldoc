@@ -73,10 +73,10 @@ class BasicOperations:
         command = shlex.split(cmd)
         self.log.debug("Running command %s" % cmd)
         if stdin is None:
-            proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+            proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, check=True)
         else:
             with open(stdin) as dump:
-                proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=dump)
+                proc = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE, stdin=dump, check=True)
         out = proc.stdout
         err = proc.stderr
         self.log.debug("Process output: %s" % out.decode("utf-8"))

@@ -44,7 +44,7 @@ class Restore(BasicOperations):
         for i in [self.logicaldoc_doc, self.logicaldoc_index, self.logicaldoc_conf]:
             try:
                 shutil.rmtree(str(i))
-                self.log.info("%s, was deleted" % (str(i)))
+                self.log.info("%s is deleted" % (str(i)))
             except FileNotFoundError:
                 self.log.debug("%s does not exist. Nothing to remove" % str(i))
         for src, dst in [(conf_folder, self.logicaldoc_conf), (index_folder, self.logicaldoc_index), (docs_folder, self.logicaldoc_doc)]:

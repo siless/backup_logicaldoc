@@ -9,7 +9,7 @@ from src.operations.restore import Restore
 
 
 def operation_ends(value):
-    sys.exit("%s beendet" % value)
+    sys.exit("%s ended" % value)
 
 
 def __backup():
