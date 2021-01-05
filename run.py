@@ -47,9 +47,11 @@ def main():
             __restore()
         elif value.lower().__eq__("install"):
             __install()
+        else:
+            sys.exit("wrong command")
 
 
 if __name__ == '__main__':
     if os.getuid() != 0:
-        sys.exit("Unzureichende Privilegien")
+        sys.exit("insufficient privileges")
     main()
